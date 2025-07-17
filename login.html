@@ -2,11 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-    
+    <header>
+        <h1>Login</h1>
+    </header>
+    <main>
+        <form id="loginForm">
+            <label for="loginNim">NIM:</label>
+            <input type="text" id="loginNim" required>
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Belum punya akun? <a href="register.html">Registrasi di sini</a></p>
+    </main>
 
     <script src="js/auth.js"></script>
     <script src="js/login.js"></script>
