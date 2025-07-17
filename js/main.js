@@ -2,18 +2,23 @@
 
 window.onload = function() {
     const userData = getUserData();
+    const guestNav = document.getElementById('guest-nav');
+    const userNav = document.getElementById('user-nav');
 
     if (userData) {
-        // Jika user sudah login
-        document.getElementById('guest-view').style.display = 'none';
-        document.getElementById('user-view').style.display = 'block';
+        // Tampilkan navigasi user, sembunyikan navigasi tamu
+        guestNav.style.display = 'none';
+        userNav.style.display = 'flex'; // 'flex' agar item sejajar
 
+        // Atur link dashboard berdasarkan role
         const dashboardLink = document.getElementById('dashboard-link');
-        if (userData.role === 'admin') {
-            dashboardLink.href = 'admin.html';
-        } else {
-            dashboardLink.href = 'user.html';
-        }
+        dashboardLink.href = userData.role === 'admin' ? 'admin.html' : 'user.html';
+
+        // Tampilkan pesan selamat datang
+        document.getElementById('welcome-text').innerText = `Halo, ${userData.nim}`;
+    } else {
+        // Tampilkan navigasi tamu, sembunyikan navigasi user
+        guestNav.style.display = 'block';
+        userNav.style.display = 'none';
     }
-    // Jika tidak ada userData, biarkan tampilan default (guest-view)
 }
