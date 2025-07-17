@@ -1,0 +1,17 @@
+<h1>Dashboard User</h1>
+<p id="welcomeMessage"></p>
+<a href="form.html">Isi Formulir Pendaftaran Himpunan</a>
+<br><br>
+<button onclick="logout()">Logout</button>
+
+<script src="js/auth.js"></script>
+<script>
+    // Lindungi halaman ini hanya untuk 'user'
+    checkAccess('user');
+
+    // Tampilkan pesan selamat datang
+    const userData = getUserData();
+    if (userData) {
+        document.getElementById('welcomeMessage').innerText = `Selamat datang, NIM: ${userData.nim}!`;
+    }
+</script>
