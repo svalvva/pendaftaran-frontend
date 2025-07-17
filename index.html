@@ -1,30 +1,29 @@
-<h1>Selamat Datang di Sistem Pendaftaran</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistem Pendaftaran</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <header>
+        <h1>Selamat Datang di Sistem Pendaftaran Himpunan</h1>
+        <p>Silakan login atau registrasi untuk melanjutkan.</p>
+    </header>
 
-<div id="guest-view">
-    <a href="login.html">Login</a> | <a href="register.html">Register</a>
-</div>
+    <main>
+        <div id="guest-view">
+            <a href="login.html"><button>Login</button></a>
+            <a href="register.html"><button>Register</button></a>
+        </div>
 
-<div id="user-view" style="display:none;">
-    <p>Anda sudah login. <a id="dashboard-link" href="#">Pergi ke Dashboard</a></p>
-    <button onclick="logout()">Logout</button>
-</div>
+        <div id="user-view" style="display:none;">
+            <p>Anda sudah login. <a id="dashboard-link" href="#"><button>Pergi ke Dashboard</button></a></p>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </main>
 
-<script src="js/auth.js"></script>
-<script>
-    // Logika untuk menampilkan menu yang sesuai
-    window.onload = function() {
-        const userData = getUserData();
-        if (userData) {
-            // Jika user sudah login
-            document.getElementById('guest-view').style.display = 'none';
-            document.getElementById('user-view').style.display = 'block';
-
-            const dashboardLink = document.getElementById('dashboard-link');
-            if (userData.role === 'admin') {
-                dashboardLink.href = 'admin.html';
-            } else {
-                dashboardLink.href = 'user.html';
-            }
-        }
-    }
-</script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
