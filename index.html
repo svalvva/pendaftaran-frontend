@@ -1,0 +1,30 @@
+<h1>Selamat Datang di Sistem Pendaftaran</h1>
+
+<div id="guest-view">
+    <a href="login.html">Login</a> | <a href="register.html">Register</a>
+</div>
+
+<div id="user-view" style="display:none;">
+    <p>Anda sudah login. <a id="dashboard-link" href="#">Pergi ke Dashboard</a></p>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+    // Logika untuk menampilkan menu yang sesuai
+    window.onload = function() {
+        const userData = getUserData();
+        if (userData) {
+            // Jika user sudah login
+            document.getElementById('guest-view').style.display = 'none';
+            document.getElementById('user-view').style.display = 'block';
+
+            const dashboardLink = document.getElementById('dashboard-link');
+            if (userData.role === 'admin') {
+                dashboardLink.href = 'admin.html';
+            } else {
+                dashboardLink.href = 'user.html';
+            }
+        }
+    }
+</script>
