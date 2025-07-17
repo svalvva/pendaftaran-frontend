@@ -1,31 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>User Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* Animasi sederhana untuk memunculkan konten */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .content-fade {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>User Dashboard</h1>
-    </header>
-    <main>
-        <p id="welcomeMessage">Selamat datang di dashboard Anda.</p>
-        <a href="form.html"><button>Isi Formulir Pendaftaran</button></a>
-        <br><br>
-        <button onclick="logout()">Logout</button>
-    </main>
+<body class="bg-gray-900 text-gray-200 flex min-h-screen">
 
-    <script src="js/auth.js"></script>
-    <script>
-        // Periksa akses saat halaman dimuat
-        checkAccess('user');
+  <aside class="w-64 bg-gray-800 p-6 flex flex-col shadow-lg">
+    <div class="flex items-center gap-3 mb-10">
+      <span class="font-bold text-xl text-red-500">HIMATIF</span>
+    </div>
 
-        // Tambahkan info personalisasi
-        const userData = getUserData();
-        if (userData) {
-            document.getElementById('welcomeMessage').innerText = `Selamat datang, NIM: ${userData.nim}`;
-        }
-    </script>
+    <nav class="flex-1 flex flex-col gap-4">
+      <a href="#" class="flex items-center gap-3 px-4 py-2 text-white bg-red-600 rounded-lg">
+        <i class="fa-solid fa-house fa-fw"></i>
+        <span>Home</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-colors">
+        <i class="fa-solid fa-user fa-fw"></i>
+        <span>Profil</span>
+      </a>
+      <a href="form.html" class="flex items-center gap-3 px-4 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-colors">
+        <i class="fa-solid fa-file-lines fa-fw"></i>
+        <span>Form Pendaftaran</span>
+      </a>
+    </nav>
+
+    <div>
+      <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg transition-colors">
+        <i class="fa-solid fa-right-from-bracket fa-fw"></i>
+        <span>Log Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="flex-1 p-8 content-fade">
+    
+    <div class="p-6 rounded-lg bg-gradient-to-r from-red-600 to-red-800 text-white shadow-lg mb-8">
+      <h1 id="welcomeMessage" class="text-3xl font-bold"></h1>
+      <p>Selamat datang kembali! Lihat status pendaftaran dan tugas Anda di sini.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <h3 class="text-gray-400 text-sm">Status Pendaftaran</h3>
+        <p class="text-2xl font-bold text-yellow-400">Menunggu</p>
+      </div>
+      <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <h3 class="text-gray-400 text-sm">Jadwal Wawancara</h3>
+        <p class="text-2xl font-bold">Belum Ada</p>
+      </div>
+      <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <h3 class="text-gray-400 text-sm">Divisi Pilihan</h3>
+        <p class="text-2xl font-bold">PSDM</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+      <h2 class="text-xl font-semibold mb-4 text-red-500">Aksi Cepat</h2>
+      <p class="text-gray-300 mb-4">Anda belum melengkapi formulir pendaftaran himpunan. Silakan lengkapi data diri, motivasi, dan unggah CV Anda.</p>
+      <a href="form.html" class="inline-block px-6 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors">
+        Lengkapi Formulir Sekarang
+      </a>
+    </div>
+
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // 1. Lindungi halaman ini, hanya untuk 'user'
+    checkAccess('user');
+
+    // 2. Ambil data user dari token dan personalisasi halaman
+    const userData = getUserData();
+    if (userData) {
+      // Mengubah judul halaman browser
+      document.title = `Dashboard - ${userData.nim}`;
+      
+      // Mengisi pesan selamat datang di banner
+      document.getElementById('welcomeMessage').innerText = `Halo, ${userData.nim}!`;
+    }
+  </script>
 </body>
 </html>
