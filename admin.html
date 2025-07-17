@@ -1,9 +1,29 @@
-<h1>Selamat Datang, Admin!</h1>
-<p>Ini adalah halaman dashboard khusus untuk Admin.</p>
-<button onclick="logout()">Logout</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <main>
+        <p id="welcomeMessage">Ini adalah halaman yang hanya bisa diakses oleh Admin.</p>
+        <button onclick="logout()">Logout</button>
+    </main>
+    
+    <script src="js/auth.js"></script>
+    <script>
+        // Periksa akses saat halaman dimuat
+        checkAccess('admin');
 
-<script src="js/auth.js"></script>
-<script>
-    // Langsung panggil checkAccess saat halaman dimuat
-    checkAccess('admin'); 
-</script>
+        // Tambahkan info personalisasi
+        const adminData = getUserData();
+        if(adminData) {
+            document.getElementById('welcomeMessage').innerText = `Selamat datang, Admin NIM: ${adminData.nim}`;
+        }
+    </script>
+</body>
+</html>
