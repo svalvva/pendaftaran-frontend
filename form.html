@@ -1,9 +1,45 @@
-<h1>Formulir Pendaftaran Himpunan</h1>
-<p>Silakan isi data berikut.</p>
-<button onclick="logout()">Logout</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulir Pendaftaran Himpunan</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <header>
+        <h1>Formulir Pendaftaran Himpunan</h1>
+    </header>
+    <main>
+        <form id="submissionForm">
+            <label for="division">Pilihan Divisi:</label>
+            <select id="division" required>
+                <option value="BPH">Badan Pengurus Harian</option>
+                <option value="PSDM">Pengembangan Sumber Daya Mahasiswa</option>
+                <option value="Humas">Hubungan Masyarakat</option>
+            </select>
 
-<script src="js/auth.js"></script>
-<script>
-    // Hanya user yang bisa mengakses form ini
-    checkAccess('user');
-</script>
+            <label for="motivation">Motivasi Bergabung:</label>
+            <textarea id="motivation" rows="5" required></textarea>
+
+            <label for="cv">Upload CV (PDF):</label>
+            <input type="file" id="cv" accept=".pdf" required>
+
+            <button type="submit">Kirim Pendaftaran</button>
+        </form>
+        <br>
+        <button onclick="logout()">Logout</button>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Periksa akses saat halaman dimuat
+        checkAccess('user');
+
+        // (Di sini nanti ditambahkan logika untuk mengirim form ke backend)
+        document.getElementById('submissionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Fitur pengiriman form belum terhubung ke backend!");
+        });
+    </script>
+</body>
+</html>
