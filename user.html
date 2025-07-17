@@ -1,17 +1,31 @@
-<h1>Dashboard User</h1>
-<p id="welcomeMessage"></p>
-<a href="form.html">Isi Formulir Pendaftaran Himpunan</a>
-<br><br>
-<button onclick="logout()">Logout</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <header>
+        <h1>User Dashboard</h1>
+    </header>
+    <main>
+        <p id="welcomeMessage">Selamat datang di dashboard Anda.</p>
+        <a href="form.html"><button>Isi Formulir Pendaftaran</button></a>
+        <br><br>
+        <button onclick="logout()">Logout</button>
+    </main>
 
-<script src="js/auth.js"></script>
-<script>
-    // Lindungi halaman ini hanya untuk 'user'
-    checkAccess('user');
+    <script src="js/auth.js"></script>
+    <script>
+        // Periksa akses saat halaman dimuat
+        checkAccess('user');
 
-    // Tampilkan pesan selamat datang
-    const userData = getUserData();
-    if (userData) {
-        document.getElementById('welcomeMessage').innerText = `Selamat datang, NIM: ${userData.nim}!`;
-    }
-</script>
+        // Tambahkan info personalisasi
+        const userData = getUserData();
+        if (userData) {
+            document.getElementById('welcomeMessage').innerText = `Selamat datang, NIM: ${userData.nim}`;
+        }
+    </script>
+</body>
+</html>
