@@ -134,24 +134,24 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-8">
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#" class="bg-gray-800 flex items-center justify-center flex-col px-12 h-full text-center">
+            <form id="registerForm" class="bg-gray-800 flex items-center justify-center flex-col px-12 h-full text-center">
                 <h1 class="font-bold text-2xl text-red-500 mb-4">Buat Akun</h1>
-                <input type="text" placeholder="Nama Lengkap" class="w-full mb-2 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" />
-                <input type="email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" />
-                <input type="password" placeholder="Password" class="w-full mb-4 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" />
-                <button class="w-full bg-red-600 text-white py-2 rounded font-semibold hover:bg-red-700 transition-colors">Register</button>
+                <input type="text" name="name" placeholder="Nama Lengkap" class="w-full mb-2 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" required />
+                <input type="email" name="email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" required />
+                <input type="password" name="password" placeholder="Password" class="w-full mb-4 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" required />
+                <button type="submit" class="w-full bg-red-600 text-white py-2 rounded font-semibold hover:bg-red-700 transition-colors">Register</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#" class="bg-gray-800 flex items-center justify-center flex-col px-12 h-full text-center">
+            <form id="loginForm" class="bg-gray-800 flex items-center justify-center flex-col px-12 h-full text-center">
                 <h1 class="font-bold text-2xl text-red-500 mb-4">Login</h1>
-                <input type="email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" />
-                <input type="password" placeholder="Password" class="w-full mb-4 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" />
+                <input type="email" name="email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" required />
+                <input type="password" name="password" placeholder="Password" class="w-full mb-4 px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-red-500" required />
                 <a href="#" class="text-gray-400 text-sm mb-4 hover:underline">Lupa password?</a>
-                <button class="w-full bg-red-600 text-white py-2 rounded font-semibold hover:bg-red-700 transition-colors">Login</button>
+                <button type="submit" class="w-full bg-red-600 text-white py-2 rounded font-semibold hover:bg-red-700 transition-colors">Login</button>
             </form>
         </div>
         <div class="overlay-container">
@@ -171,6 +171,5 @@
     </div>
 
     <script src="js/masuk.js" defer></script>
-    
 </body>
 </html>
