@@ -1,64 +1,53 @@
-// js/auth.js
+// js/auth.js (VERSI BARU YANG BENAR)
 
-const API_URL = "http://localhost:8080/api"; // URL Backend Go Anda
-
-/**
- * Menyimpan token JWT ke localStorage.
- * @param {string} token - Token JWT yang diterima dari backend.
- */
+// Fungsi untuk menyimpan token. Pastikan kuncinya sama dengan di login.js
 function saveToken(token) {
-    localStorage.setItem('jwt_token', token);
+    localStorage.setItem('pasetoToken', token);
 }
 
-/**
- * Mengambil token JWT dari localStorage.
- * @returns {string|null} Token JWT atau null jika tidak ada.
- */
+// Fungsi untuk mengambil token.
 function getToken() {
-    return localStorage.getItem('jwt_token');
+    return localStorage.getItem('pasetoToken');
 }
 
-/**
- * Menghapus token dari localStorage dan mengarahkan ke halaman login.
- */
+// Fungsi untuk logout.
 function logout() {
-    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('pasetoToken');
     window.location.href = 'login.html';
 }
 
 /**
- * Mendekode token untuk mendapatkan data user (NIM, role, dll).
- * @returns {object|null} Data user atau null jika token tidak valid.
+ * Mengambil data user dari backend dengan menggunakan token yang tersimpan.
+ * Ini adalah cara yang aman dan benar untuk Paseto.
+ * @returns {Promise<object|null>} Data user atau null jika gagal.
  */
-function getUserData() {
+async function fetchUserData() {
     const token = getToken();
-    if (!token) return null;
+    if (!token) {
+        return null; // Tidak ada token, tidak perlu fetch
+    }
 
     try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        return payload;
-    } catch (e) {
-        console.error("Gagal parse token:", e);
-        logout(); // Jika token rusak, auto logout
+        const response = await fetch('http://localhost:8080/api/user/profile', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            // Jika token tidak valid (misalnya kedaluwarsa), server akan menolak.
+            // Kita anggap ini sebagai kondisi logout.
+            console.error('Token tidak valid atau sesi berakhir.');
+            logout();
+            return null;
+        }
+
+        const userData = await response.json();
+        return userData;
+
+    } catch (error) {
+        console.error('Gagal terhubung ke server untuk mengambil data user:', error);
         return null;
-    }
-}
-
-/**
- * Melindungi halaman berdasarkan status login dan role user.
- * @param {string} requiredRole - Role yang dibutuhkan ('admin' atau 'user').
- */
-function checkAccess(requiredRole = null) {
-    const userData = getUserData();
-
-    if (!userData) {
-        alert("Anda harus login untuk mengakses halaman ini.");
-        logout();
-        return;
-    }
-
-    if (requiredRole && userData.role !== requiredRole) {
-        alert(`Akses Ditolak! Halaman ini khusus untuk ${requiredRole}.`);
-        window.location.href = 'index.html';
     }
 }

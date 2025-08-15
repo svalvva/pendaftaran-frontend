@@ -1,64 +1,61 @@
 // js/login.js
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    console.log("Login form disubmit.");
+document.addEventListener('DOMContentLoaded', () => {
+    // Pastikan elemen form ada sebelum menambahkan event listener
+    const loginForm = document.getElementById('loginForm');
+    if (!loginForm) return;
 
-    const form = e.target;
-    const formData = new FormData(form);
-    const data = {
-        nim: formData.get('NPM'),
-        password: formData.get('password')
-    };
-    console.log("Data yang akan dikirim ke backend:", data);
+    loginForm.addEventListener('submit', async (event) => {
+        // Mencegah form me-reload halaman
+        event.preventDefault();
 
-    try {
-        console.log("Mengirim request ke backend...");
-        const response = await fetch(`${API_URL}/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        console.log("Mendapat respons dari backend:", response);
+        // Mengambil semua data dari form secara otomatis
+        const formData = new FormData(loginForm);
+        const data = Object.fromEntries(formData.entries());
 
-        console.log("Mencoba membaca body respons sebagai JSON...");
-        const result = await response.json();
-        console.log("Hasil body JSON:", result);
+        try {
+            // Mengirim data ke URL backend yang BENAR (tanpa /api/)
+            const response = await fetch('http://localhost:8080/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
 
-        if (response.ok) {
-            console.log("Respons OK. Memproses token...");
-            console.log("Token yang diterima:", result.token);
+            const result = await response.json();
+
+            // Jika server merespons dengan error (status bukan 2xx)
+            if (!response.ok) {
+                throw new Error(result.error || 'Terjadi kesalahan saat login.');
+            }
             
-            saveToken(result.token);
-            const userData = getUserData();
-            console.log("Data user dari token:", userData);
+            // Jika berhasil, simpan token ke localStorage (dompet browser)
+            localStorage.setItem('pasetoToken', result.token);
 
+            // Tampilkan notifikasi sukses
             await Swal.fire({
                 icon: 'success',
                 title: 'Login Berhasil!',
+                text: 'Anda akan diarahkan ke halaman dashboard.',
                 timer: 1500,
                 showConfirmButton: false,
             });
 
-            console.log("Mengarahkan ke halaman dashboard...");
-            window.location.href = userData.role === 'admin' ? 'admin.html' : 'user.html';
+            // Arahkan ke halaman yang sesuai berdasarkan role dari server
+            if (result.role === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'user.html';
+            }
 
-        } else {
-            console.error("Respons dari server tidak OK (bukan status 2xx).");
+        } catch (error) {
+            // Tampilkan notifikasi jika login gagal
             Swal.fire({
                 icon: 'error',
                 title: 'Login Gagal',
-                text: result.error,
+                text: error.message,
             });
         }
-    } catch (error) {
-        // INI BAGIAN YANG PALING PENTING UNTUK KITA LIHAT
-        console.error("ERROR TERJADI DI BLOK CATCH:", error);
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Koneksi Gagal',
-            text: 'Tidak bisa terhubung ke server. Pastikan backend berjalan.',
-        });
-    }
+    });
 });

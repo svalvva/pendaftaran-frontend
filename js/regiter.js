@@ -1,29 +1,71 @@
 // js/register.js
 
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('regName').value;
-    const nim = document.getElementById('regNim').value;
-    const email = document.getElementById('regEmail').value;
-    const password = document.getElementById('regPassword').value;
+document.addEventListener('DOMContentLoaded', () => {
+    // Pastikan elemen form ada
+    const registerForm = document.getElementById('registerForm');
+    if (!registerForm) return;
 
-    try {
-        const response = await fetch(`${API_URL}/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, nim, email, password })
-        });
+    registerForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-        const result = await response.json();
+        // Mengambil semua data dari form secara otomatis
+        const formData = new FormData(registerForm);
+        const data = Object.fromEntries(formData.entries());
 
-        if (response.ok) {
-            alert('Registrasi berhasil! Silakan login dengan akun Anda.');
-            window.location.href = 'login.html';
-        } else {
-            alert(`Registrasi Gagal: ${result.error}`);
+        // Validasi di sisi frontend: pastikan password cocok
+        if (data.password !== data.password_confirmation) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password dan Konfirmasi Password tidak cocok!',
+            });
+            return; // Hentikan eksekusi
         }
-    } catch (error) {
-        alert("Tidak bisa terhubung ke server.");
-        console.error("Error:", error);
-    }
+
+        try {
+            // Mengirim data ke URL backend yang BENAR untuk registrasi
+            const response = await fetch('http://localhost:8080/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // Kirim data yang relevan ke backend
+                body: JSON.stringify({
+                    name: data.name,
+                    nim: data.nim,
+                    birth_place: data.birth_place,
+                    birth_date: data.birth_date,
+                    email: data.email,
+                    password: data.password
+                }),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                // Ini akan menangkap error dari backend, seperti "NIM already registered"
+                throw new Error(result.error || 'Terjadi kesalahan saat pendaftaran.');
+            }
+
+            // Jika registrasi berhasil
+            await Swal.fire({
+                icon: 'success',
+                title: 'Pendaftaran Berhasil!',
+                text: 'Akun Anda telah dibuat. Silakan login.',
+                timer: 2000,
+                showConfirmButton: false,
+            });
+
+            // Arahkan ke halaman login
+            window.location.href = 'login.html';
+
+        } catch (error) {
+            // Tampilkan pesan error dari server
+            Swal.fire({
+                icon: 'error',
+                title: 'Pendaftaran Gagal',
+                text: error.message,
+            });
+        }
+    });
 });

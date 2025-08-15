@@ -81,18 +81,25 @@
 
   <script src="js/auth.js"></script>
   <script>
-    // 1. Lindungi halaman ini, hanya untuk 'user'
-    checkAccess('user');
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Cara baru untuk "melindungi" halaman:
+        // 1. Coba ambil data user dari backend.
+        const userData = await fetchUserData();
 
-    // 2. Ambil data user dari token dan personalisasi halaman
-    const userData = getUserData();
-    if (userData) {
-      // Mengubah judul halaman browser
-      document.title = `Dashboard - ${userData.nim}`;
-      
-      // Mengisi pesan selamat datang di banner
-      document.getElementById('welcomeMessage').innerText = `Halo, ${userData.nim}!`;
-    }
-  </script>
+        // 2. Jika tidak ada data (karena token tidak ada atau tidak valid),
+        //    fungsi fetchUserData akan otomatis mengarahkan ke halaman login.
+        //    Jadi kita hanya perlu melanjutkan jika userData ADA.
+        if (userData) {
+            // 3. Jika berhasil, personalisasi halaman dengan data yang valid.
+            document.title = `Dashboard - ${userData.nim}`;
+            document.getElementById('welcomeMessage').innerText = `Halo, ${userData.name}!`;
+        } else {
+            // Jika userData null, berarti user belum login. 
+            // Tampilkan alert dan arahkan ke login.
+            alert("Anda harus login untuk mengakses halaman ini.");
+            window.location.href = 'login.html';
+        }
+    });
+</script>
 </body>
 </html>
