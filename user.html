@@ -19,54 +19,60 @@
 </head>
 <body class="bg-gray-900 text-gray-200 flex min-h-screen">
 
-  <aside class="w-64 bg-gray-800 p-6 flex flex-col shadow-lg">
-    <div class="flex items-center gap-3 mb-10">
-      <span class="font-bold text-xl text-red-500">HIMATIF</span>
+  <aside class="w-20 hover:w-64 bg-gray-800 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group">
+    <div class="flex items-center gap-3 mb-10 h-10">
+        <i class="fa-solid fa-layer-group fa-2x text-red-500 min-w-[32px] text-center"></i>
+        <span class="font-bold text-xl text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF</span>
     </div>
 
-    <nav class="flex-1 flex flex-col gap-4">
-      <a href="#" class="flex items-center gap-3 px-4 py-2 text-white bg-red-600 rounded-lg">
-        <i class="fa-solid fa-house fa-fw"></i>
-        <span>Home</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-colors">
-        <i class="fa-solid fa-user fa-fw"></i>
-        <span>Profil</span>
-      </a>
-      <a href="form.html" class="flex items-center gap-3 px-4 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg transition-colors">
-        <i class="fa-solid fa-file-lines fa-fw"></i>
-        <span>Form Pendaftaran</span>
-      </a>
-    </nav>
+    <div class="flex flex-col justify-between flex-1">
+        <nav class="flex flex-col gap-4">
+            <a href="user.html" class="flex items-center gap-3 px-2 py-2 text-white bg-red-600 rounded-lg h-12">
+                <i class="fa-solid fa-house fa-fw fa-lg min-w-[32px] text-center"></i>
+                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Home</span>
+            </a>
+            <a href="profile.html" class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg h-12">
+                <i class="fa-solid fa-user fa-fw fa-lg min-w-[32px] text-center"></i>
+                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Profil</span>
+            </a>
+            <a href="form.html" class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg h-12">
+                <i class="fa-solid fa-file-lines fa-fw fa-lg min-w-[32px] text-center"></i>
+                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Form Pendaftaran</span>
+            </a>
+        </nav>
 
-    <div>
-      <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg transition-colors">
-        <i class="fa-solid fa-right-from-bracket fa-fw"></i>
-        <span>Log Out</span>
-      </button>
+        <div>
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg h-12">
+                <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
+                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
+            </button>
+        </div>
     </div>
-  </aside>
+</aside>
 
   <main class="flex-1 p-8 content-fade">
-    
+    <button id="menu-toggle" class="lg:hidden mb-4 text-gray-300 hover:text-white">
+        <!-- <i class="fa-solid fa-bars fa-lg"></i> -->
+    </button>
+
     <div class="p-6 rounded-lg bg-gradient-to-r from-red-600 to-red-800 text-white shadow-lg mb-8">
       <h1 id="welcomeMessage" class="text-3xl font-bold"></h1>
       <p>Selamat datang kembali! Lihat status pendaftaran dan tugas Anda di sini.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+    <div id="statusCards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
         <h3 class="text-gray-400 text-sm">Status Pendaftaran</h3>
-        <p class="text-2xl font-bold text-yellow-400">Menunggu</p>
-      </div>
-      <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <p id="statusText" class="text-2xl font-bold text-yellow-400">Memuat...</p>
+    </div>
+    <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
         <h3 class="text-gray-400 text-sm">Jadwal Wawancara</h3>
-        <p class="text-2xl font-bold">Belum Ada</p>
-      </div>
-      <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
+        <p id="interviewText" class="text-2xl font-bold">Memuat...</p>
+    </div>
+    <div class="bg-gray-800 p-5 rounded-lg border border-gray-700">
         <h3 class="text-gray-400 text-sm">Divisi Pilihan</h3>
-        <p class="text-2xl font-bold">PSDM</p>
-      </div>
+        <p id="divisionText" class="text-2xl font-bold">Memuat...</p>
+    </div>
     </div>
 
     <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
@@ -80,22 +86,60 @@
   </main>
 
   <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-        // Cara baru untuk "melindungi" halaman:
-        // 1. Coba ambil data user dari backend.
         const userData = await fetchUserData();
 
-        // 2. Jika tidak ada data (karena token tidak ada atau tidak valid),
-        //    fungsi fetchUserData akan otomatis mengarahkan ke halaman login.
-        //    Jadi kita hanya perlu melanjutkan jika userData ADA.
         if (userData) {
-            // 3. Jika berhasil, personalisasi halaman dengan data yang valid.
+            // Personalisasi halaman dengan data user
             document.title = `Dashboard - ${userData.nim}`;
             document.getElementById('welcomeMessage').innerText = `Halo, ${userData.name}!`;
+
+            // Ambil data pendaftaran spesifik milik user ini
+            try {
+                const token = getToken();
+                const regResponse = await fetch('http://localhost:8080/api/user/my-registration', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                // Dapatkan elemen-elemen untuk diubah
+                const statusText = document.getElementById('statusText');
+                const interviewText = document.getElementById('interviewText');
+                const divisionText = document.getElementById('divisionText');
+                const actionBox = document.getElementById('actionBox');
+
+                if (regResponse.status === 200) {
+                    // Jika user SUDAH mengirim formulir
+                    const regData = await regResponse.json();
+                    
+                    statusText.innerText = regData.status;
+                    // Format tanggal wawancara agar lebih mudah dibaca
+                    if(regData.interview_schedule) {
+                        const date = new Date(regData.interview_schedule);
+                        interviewText.innerText = date.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
+                    } else {
+                        interviewText.innerText = 'Belum Ada';
+                    }
+                    divisionText.innerText = regData.division;
+                    
+                    // Sembunyikan box "Aksi Cepat"
+                    actionBox.style.display = 'none';
+
+                } else {
+                    // Jika user BELUM mengirim formulir
+                    statusText.innerText = 'Belum Mendaftar';
+                    interviewText.innerText = 'Belum Ada';
+                    divisionText.innerText = 'Belum Ada';
+                    
+                    // Tampilkan box "Aksi Cepat"
+                    actionBox.style.display = 'block';
+                }
+            } catch (error) {
+                console.error("Gagal mengambil data pendaftaran:", error);
+                // Biarkan nilai default jika ada error jaringan
+            }
         } else {
-            // Jika userData null, berarti user belum login. 
-            // Tampilkan alert dan arahkan ke login.
             alert("Anda harus login untuk mengakses halaman ini.");
             window.location.href = 'login.html';
         }

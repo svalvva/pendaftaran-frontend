@@ -1,29 +1,288 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-</head>
-<body>
-    <header>
-        <h1>Admin Dashboard</h1>
-    </header>
-    <main>
-        <p id="welcomeMessage">Ini adalah halaman yang hanya bisa diakses oleh Admin.</p>
-        <button onclick="logout()">Logout</button>
-    </main>
-    
-    <script src="js/auth.js"></script>
-    <script>
-        // Periksa akses saat halaman dimuat
-        checkAccess('admin');
+<html lang="id">
 
-        // Tambahkan info personalisasi
-        const adminData = getUserData();
-        if(adminData) {
-            document.getElementById('welcomeMessage').innerText = `Selamat datang, Admin NIM: ${adminData.nim}`;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - HIMATIF</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* Keyframe dasar untuk fade in */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
         }
-    </script>
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Versi keyframe dengan sedikit delay */
+    @keyframes fadeInDelayed {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Class untuk menerapkan animasi */
+    .animate-fade-in {
+        /* Mencegah elemen terlihat sebelum animasi dimulai */
+        opacity: 0; 
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    /* Class untuk menerapkan animasi dengan delay */
+    .animate-fade-in-delayed {
+        opacity: 0;
+        animation: fadeInDelayed 0.5s ease-out forwards;
+        /* Tambahkan delay di sini */
+        animation-delay: 0.2s; 
+    }
+
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .date-input-dark-icon {
+        color-scheme: dark;
+    }
+</style>
+</head>
+
+<body class="bg-gray-900 text-gray-200 flex min-h-screen">
+
+  <aside class="w-20 hover:w-64 bg-gray-800 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in">
+    <div class="flex items-center gap-3 mb-10 h-10">
+        <i class="fa-solid fa-user-shield fa-2x text-red-500 min-w-[32px] text-center"></i>
+        <span class="font-bold text-xl text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
+    </div>
+
+    <div class="flex flex-col justify-between flex-1">
+        <nav class="flex flex-col gap-4">
+            <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-white bg-red-600 rounded-lg h-12">
+                <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
+                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
+            </a>
+        </nav>
+
+        <div>
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg h-12">
+                <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
+                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
+            </button>
+        </div>
+    </div>
+</aside>
+
+  <main class="flex-1 p-8 ml-20 transition-all duration-300 animate-fade-in-delayed">
+    <button id="menu-toggle" class="lg:hidden mb-4 text-gray-300 hover:text-white">
+      <!-- <i class="fa-solid fa-bars fa-lg"></i> -->
+    </button>
+
+    <h1 class="text-3xl font-bold text-red-500 mb-6">Daftar Calon Anggota</h1>
+    <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="border-b border-gray-600">
+              <th class="p-3">Nama</th>
+              <th class="p-3">NIM</th>
+              <th class="p-3">Divisi</th>
+              <th class="p-3">Status</th>
+              <th class="p-3 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="registrationsTableBody">
+            <tr>
+              <td colspan="5" class="p-3 text-center">Memuat data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div id="detailsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop">
+    <div
+      class="bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full p-6 border border-gray-700 max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center mb-4 flex-shrink-0">
+        <h2 id="modalTitle" class="text-xl font-bold text-red-500">Kelola Pendaftar</h2>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+      </div>
+      <div class="overflow-y-auto pr-2">
+        <div class="mb-4">
+          <p><strong>Nama:</strong> <span id="modalName"></span></p>
+          <p><strong>NIM:</strong> <span id="modalNim"></span></p>
+          <p class="mt-2"><strong>Motivasi:</strong></p>
+          <p id="modalMotivation" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
+          <p class="mt-2"><strong>Visi & Misi:</strong></p>
+          <p id="modalVisionMission" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
+        </div>
+        <form id="editForm" class="border-t border-gray-700 pt-4">
+          <div class="space-y-4">
+            <div>
+              <label for="modalStatus" class="block text-sm font-medium text-gray-300">Ubah Status Pendaftaran</label>
+              <select id="modalStatus" name="status"
+                class="mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded">
+                <option value="pending">Menunggu</option>
+                <option value="interview">Wawancara</option>
+                <option value="accepted">Diterima</option>
+                <option value="rejected">Ditolak</option>
+              </select>
+            </div>
+            <div>
+              <label for="modalInterview" class="block text-sm font-medium text-gray-300">Atur Jadwal Wawancara</label>
+              <input type="date" id="modalInterview" name="interview_schedule"
+                class="date-input-dark-icon mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded" disabled>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-between items-center">
+            <a id="modalCvLink" href="#" target="_blank"
+              class="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700">Download CV</a>
+            <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Simpan
+              Perubahan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    // --- Variabel Global & Fungsi Pembantu ---
+    let allRegistrations = [];
+    let currentEditingId = null;
+    const modal = document.getElementById('detailsModal');
+    const statusSelect = document.getElementById('modalStatus');
+    const interviewInput = document.getElementById('modalInterview');
+
+    function closeModal() {
+      modal.classList.add('hidden');
+    }
+
+    // --- Logika Inti ---
+    function showModal(regId) {
+      currentEditingId = regId;
+      const reg = allRegistrations.find(r => r.id === regId);
+      if (reg) {
+        // Mengisi bagian detail
+        document.getElementById('modalTitle').innerText = `Kelola: ${reg.name}`;
+        document.getElementById('modalName').innerText = reg.name;
+        document.getElementById('modalNim').innerText = reg.nim;
+        document.getElementById('modalMotivation').innerText = reg.motivation;
+        document.getElementById('modalVisionMission').innerText = reg.vision_mission;
+        document.getElementById('modalCvLink').href = `/api/${reg.cv_path}`;
+
+        // Mengisi bagian form
+        statusSelect.value = reg.status;
+        interviewInput.value = reg.interview_schedule ? reg.interview_schedule.slice(0, 10) : '';
+
+        // Menyesuaikan kondisi form berdasarkan status saat ini
+        if (statusSelect.value === 'interview') {
+          interviewInput.disabled = false;
+        } else {
+          interviewInput.disabled = true;
+        }
+
+        modal.classList.remove('hidden');
+      }
+    }
+
+    async function loadRegistrations() {
+      const tableBody = document.getElementById('registrationsTableBody');
+      try {
+        const token = getToken();
+        const response = await fetch('http://localhost:8080/api/admin/registrations-with-details', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!response.ok) throw new Error('Gagal memuat data pendaftar.');
+
+        allRegistrations = await response.json();
+        tableBody.innerHTML = '';
+
+        if (allRegistrations.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="5" class="p-3 text-center">Belum ada pendaftar.</td></tr>';
+          return;
+        }
+
+        allRegistrations.forEach(reg => {
+          const row = `
+                        <tr class="border-b border-gray-700 hover:bg-gray-700/50">
+                            <td class="p-3">${reg.name}</td>
+                            <td class="p-3">${reg.nim}</td>
+                            <td class="p-3">${reg.division}</td>
+                            <td class="p-3 font-semibold">${reg.status}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="showModal('${reg.id}')" class="px-3 py-1 text-sm bg-blue-600 rounded hover:bg-blue-700">Kelola</button>
+                            </td>
+                        </tr>
+                    `;
+          tableBody.innerHTML += row;
+        });
+      } catch (error) {
+        tableBody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">${error.message}</td></tr>`;
+      }
+    }
+
+    // --- Event Listeners ---
+    statusSelect.addEventListener('change', () => {
+      if (statusSelect.value === 'interview') {
+        interviewInput.disabled = false;
+      } else {
+        interviewInput.disabled = true;
+        interviewInput.value = '';
+      }
+    });
+
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentEditingId) return;
+
+      const updatedData = {
+        status: statusSelect.value,
+        interview_schedule: interviewInput.value,
+      };
+
+      try {
+        const token = getToken();
+        const response = await fetch(`http://localhost:8080/api/admin/registrations/${currentEditingId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(updatedData)
+        });
+        if (!response.ok) throw new Error('Gagal menyimpan perubahan.');
+
+        await Swal.fire('Berhasil!', 'Data pendaftar telah diperbarui.', 'success');
+        closeModal();
+        loadRegistrations(); // Muat ulang data tabel
+      } catch (error) {
+        Swal.fire('Gagal!', error.message, 'error');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const userData = await fetchUserData();
+      if (!userData || userData.role !== 'admin') {
+        alert("Akses ditolak. Halaman ini khusus untuk Admin.");
+        window.location.href = 'index.html';
+        return;
+      }
+      loadRegistrations();
+    });
+  </script>
 </body>
+
 </html>
