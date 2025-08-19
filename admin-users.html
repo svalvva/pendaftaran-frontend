@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pengguna - Admin HIMATIF</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDelayed { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+        .animate-fade-in-delayed { opacity: 0; animation: fadeInDelayed 0.5s ease-out forwards; animation-delay: 0.2s; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex min-h-screen">
+
+    <aside class="w-20 hover:w-64 bg-gray-800 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in">
+        <div class="flex items-center gap-3 mb-10 h-10">
+            <i class="fa-solid fa-user-shield fa-2x text-red-500 min-w-[32px] text-center"></i>
+            <span class="font-bold text-xl text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
+        </div>
+        <div class="flex flex-col justify-between flex-1">
+            <nav class="flex flex-col gap-4">
+                <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg h-12">
+                    <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
+                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
+                </a>
+                <a href="admin-users.html" class="flex items-center gap-3 px-2 py-2 text-white bg-red-600 rounded-lg h-12">
+                    <i class="fa-solid fa-address-book fa-fw fa-lg min-w-[32px] text-center"></i>
+                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Data Pengguna</span>
+                </a>
+            </nav>
+            <div>
+                <button onclick="logout()" class="w-full flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg h-12">
+                    <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
+                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 ml-20 transition-all duration-300 animate-fade-in-delayed">
+        <h1 class="text-3xl font-bold text-red-500 mb-6">Data Pengguna Terdaftar</h1>
+        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="p-3">Nama</th>
+                            <th class="p-3">NIM</th>
+                            <th class="p-3">Email</th>
+                            <th class="p-3">No. Telepon</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr><td colspan="4" class="p-3 text-center">Memuat data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        async function loadUsers() {
+            const tableBody = document.getElementById('usersTableBody');
+            try {
+                const token = getToken();
+                const response = await fetch('http://localhost:8080/api/admin/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) throw new Error('Gagal memuat data pengguna.');
+                
+                const users = await response.json();
+                tableBody.innerHTML = '';
+                if (users.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4" class="p-3 text-center">Belum ada pengguna terdaftar.</td></tr>';
+                    return;
+                }
+                users.forEach(user => {
+                    const row = `
+                        <tr class="border-b border-gray-700 hover:bg-gray-700/50">
+                            <td class="p-3">${user.name}</td>
+                            <td class="p-3">${user.nim}</td>
+                            <td class="p-3">${user.email}</td>
+                            <td class="p-3">${user.phone_number}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-red-500">${error.message}</td></tr>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userData = await fetchUserData();
+            if (!userData || userData.role !== 'admin') {
+                alert("Akses ditolak. Halaman ini khusus untuk Admin.");
+                window.location.href = 'index.html';
+                return;
+            }
+            loadUsers();
+        });
+    </script>
+</body>
+</html>

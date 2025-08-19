@@ -87,6 +87,10 @@
                     <p id="profileNim" class="text-lg">Memuat...</p>
                 </div>
                 <div>
+                    <h3 class="text-sm text-gray-400">Nomor Telepon</h3>
+                    <p id="profilePhoneNumber" class="text-lg">Memuat...</p>
+                </div>
+                <div>
                     <h3 class="text-sm text-gray-400">Email</h3>
                     <p id="profileEmail" class="text-lg">Memuat...</p>
                 </div>
@@ -112,6 +116,7 @@
                 // Isi data ke dalam elemen-elemen di halaman
                 document.getElementById('profileName').innerText = userData.name || '-';
                 document.getElementById('profileNim').innerText = userData.nim || '-';
+                document.getElementById('profilePhoneNumber').innerText = userData.phone_number || '-';
                 document.getElementById('profileEmail').innerText = userData.email || '-';
                 document.getElementById('profileBirthPlace').innerText = userData.birth_place || '-';
 
