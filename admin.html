@@ -111,50 +111,51 @@
     </div>
   </main>
 
-  <div id="detailsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop">
-    <div
-      class="bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full p-6 border border-gray-700 max-h-[90vh] flex flex-col">
-      <div class="flex justify-between items-center mb-4 flex-shrink-0">
-        <h2 id="modalTitle" class="text-xl font-bold text-red-500">Kelola Pendaftar</h2>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-      </div>
-      <div class="overflow-y-auto pr-2">
-        <div class="mb-4">
-          <p><strong>Nama:</strong> <span id="modalName"></span></p>
-          <p><strong>NIM:</strong> <span id="modalNim"></span></p>
-          <p class="mt-2"><strong>Motivasi:</strong></p>
-          <p id="modalMotivation" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
-          <p class="mt-2"><strong>Visi & Misi:</strong></p>
-          <p id="modalVisionMission" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
+  
+    <div id="detailsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop p-4">
+        <div class="bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full p-6 border border-gray-700 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4 flex-shrink-0">
+                <h2 id="modalTitle" class="text-xl font-bold text-red-500">Kelola Pendaftar</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="overflow-y-auto pr-2">
+                <div class="mb-4">
+                    <p><strong>Nama:</strong> <span id="modalName"></span></p>
+                    <p><strong>NIM:</strong> <span id="modalNim"></span></p>
+                    <p class="mt-2"><strong>Motivasi:</strong></p>
+                    <p id="modalMotivation" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
+                    <p class="mt-2"><strong>Visi & Misi:</strong></p>
+                    <p id="modalVisionMission" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
+                </div>
+                <form id="editForm" class="border-t border-gray-700 pt-4">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="modalStatus" class="block text-sm font-medium text-gray-300">Ubah Status Pendaftaran</label>
+                            <select id="modalStatus" name="status" class="mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded">
+                                <option value="pending">Menunggu</option>
+                                <option value="interview">Wawancara</option>
+                                <option value="accepted">Diterima</option>
+                                <option value="rejected">Ditolak</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modalInterview" class="block text-sm font-medium text-gray-300">Atur Jadwal Wawancara</label>
+                            <input type="date" id="modalInterview" name="interview_schedule" class="date-input-dark-icon mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded" disabled>
+                        </div>
+                        
+                        <div>
+                            <label for="modalLocation" class="block text-sm font-medium text-gray-300">Lokasi Wawancara</label>
+                            <input type="text" id="modalLocation" name="interview_location" placeholder="Online (Google Meet) / Offline (Sekre)" class="mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded" disabled>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-between items-center">
+                        <a id="modalCvLink" href="#" target="_blank" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700">Download CV</a>
+                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form id="editForm" class="border-t border-gray-700 pt-4">
-          <div class="space-y-4">
-            <div>
-              <label for="modalStatus" class="block text-sm font-medium text-gray-300">Ubah Status Pendaftaran</label>
-              <select id="modalStatus" name="status"
-                class="mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded">
-                <option value="pending">Menunggu</option>
-                <option value="interview">Wawancara</option>
-                <option value="accepted">Diterima</option>
-                <option value="rejected">Ditolak</option>
-              </select>
-            </div>
-            <div>
-              <label for="modalInterview" class="block text-sm font-medium text-gray-300">Atur Jadwal Wawancara</label>
-              <input type="date" id="modalInterview" name="interview_schedule"
-                class="date-input-dark-icon mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded" disabled>
-            </div>
-          </div>
-          <div class="mt-6 flex justify-between items-center">
-            <a id="modalCvLink" href="#" target="_blank"
-              class="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700">Download CV</a>
-            <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Simpan
-              Perubahan</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
 
   <script src="js/auth.js"></script>
   <script src="js/dashboard.js"></script>
@@ -165,6 +166,7 @@
     const modal = document.getElementById('detailsModal');
     const statusSelect = document.getElementById('modalStatus');
     const interviewInput = document.getElementById('modalInterview');
+    const locationInput = document.getElementById('modalLocation');
 
     function closeModal() {
       modal.classList.add('hidden');
@@ -186,14 +188,14 @@
         // Mengisi bagian form
         statusSelect.value = reg.status;
         interviewInput.value = reg.interview_schedule ? reg.interview_schedule.slice(0, 10) : '';
-
+        locationInput.value = reg.interview_location || '';
         // Menyesuaikan kondisi form berdasarkan status saat ini
         if (statusSelect.value === 'interview') {
           interviewInput.disabled = false;
         } else {
           interviewInput.disabled = true;
         }
-
+        statusSelect.dispatchEvent(new Event('change')); // Trigger perubahan untuk mengatur kondisi form
         modal.classList.remove('hidden');
       }
     }
@@ -236,13 +238,16 @@
 
     // --- Event Listeners ---
     statusSelect.addEventListener('change', () => {
-      if (statusSelect.value === 'interview') {
-        interviewInput.disabled = false;
-      } else {
-        interviewInput.disabled = true;
-        interviewInput.value = '';
-      }
-    });
+            if (statusSelect.value === 'interview') {
+                interviewInput.disabled = false;
+                locationInput.disabled = false; // <-- Tambahkan ini
+            } else {
+                interviewInput.disabled = true;
+                locationInput.disabled = true; // <-- Tambahkan ini
+                interviewInput.value = '';
+                locationInput.value = ''; // <-- Tambahkan ini
+            }
+        });
 
     document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -251,6 +256,7 @@
       const updatedData = {
         status: statusSelect.value,
         interview_schedule: interviewInput.value,
+        interview_location: locationInput.value,
       };
 
       try {
