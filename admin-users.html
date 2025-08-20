@@ -10,30 +10,37 @@
     <style>
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInDelayed { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        body {
+            background-color: #000000;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 2rem 2rem;
+        }
+
         .animate-fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
         .animate-fade-in-delayed { opacity: 0; animation: fadeInDelayed 0.5s ease-out forwards; animation-delay: 0.2s; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200 flex min-h-screen">
+<body class="text-neutral-200 flex min-h-screen font-sans">
 
-    <aside class="w-20 hover:w-64 bg-gray-800 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in">
-        <div class="flex items-center gap-3 mb-10 h-10">
+    <aside class="w-20 hover:w-64 bg-neutral-950 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in border-r border-neutral-800">
+        <div class="flex items-center gap-4 mb-10 h-10">
             <i class="fa-solid fa-user-shield fa-2x text-red-500 min-w-[32px] text-center"></i>
-            <span class="font-bold text-xl text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
+            <span class="font-bold text-xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
         </div>
         <div class="flex flex-col justify-between flex-1">
             <nav class="flex flex-col gap-4">
-                <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg h-12">
-                    <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
+                <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-neutral-400 hover:bg-neutral-800 hover:text-white rounded-lg h-12">
+                    <i class="fa-solid fa-address-book fa-fw fa-lg min-w-[32px] text-center"></i>
                     <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
                 </a>
-                <a href="admin-users.html" class="flex items-center gap-3 px-2 py-2 text-white bg-red-600 rounded-lg h-12">
-                    <i class="fa-solid fa-address-book fa-fw fa-lg min-w-[32px] text-center"></i>
+                <a href="admin-users.html" class="flex items-center gap-3 px-2 py-2 text-white bg-gradient-to-r from-red-600 to-red-800 rounded-lg h-12 shadow-md shadow-red-500/20">
+                    <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
                     <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Data Pengguna</span>
                 </a>
             </nav>
             <div>
-                <button onclick="logout()" class="w-full flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg h-12">
+                <button onclick="logout()" class="w-full flex items-center gap-4 px-3 py-2 text-neutral-400 hover:bg-red-900/50 hover:text-white rounded-lg h-12">
                     <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
                     <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
                 </button>
@@ -43,19 +50,20 @@
 
     <main class="flex-1 p-8 ml-20 transition-all duration-300 animate-fade-in-delayed">
         <h1 class="text-3xl font-bold text-red-500 mb-6">Data Pengguna Terdaftar</h1>
-        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+        
+        <div class="bg-neutral-900 p-6 rounded-xl border border-neutral-800">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead>
-                        <tr class="border-b border-gray-600">
-                            <th class="p-3">Nama</th>
-                            <th class="p-3">NIM</th>
-                            <th class="p-3">Email</th>
-                            <th class="p-3">No. Telepon</th>
+                        <tr class="border-b border-neutral-700 text-neutral-400">
+                            <th class="p-4">Nama</th>
+                            <th class="p-4">NIM</th>
+                            <th class="p-4">Email</th>
+                            <th class="p-4">No. Telepon</th>
                         </tr>
                     </thead>
-                    <tbody id="usersTableBody">
-                        <tr><td colspan="4" class="p-3 text-center">Memuat data...</td></tr>
+                    <tbody id="usersTableBody" class="divide-y divide-neutral-800">
+                        <tr><td colspan="4" class="p-4 text-center text-neutral-500">Memuat data...</td></tr>
                     </tbody>
                 </table>
             </div>
