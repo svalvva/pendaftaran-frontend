@@ -2,140 +2,128 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - HIMATIF</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <style>
-    /* Keyframe dasar untuk fade in */
-    @keyframes fadeIn {
-        from {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HIMATIF</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDelayed {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            background-color: #000000;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 2rem 2rem;
+        }
+
+        .animate-fade-in {
+            opacity: 0; 
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .animate-fade-in-delayed {
             opacity: 0;
-            transform: translateY(10px);
+            animation: fadeInDelayed 0.5s ease-out forwards;
+            animation-delay: 0.2s; 
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
         }
-    }
 
-    /* Versi keyframe dengan sedikit delay */
-    @keyframes fadeInDelayed {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
+        .date-input-dark-icon {
+            color-scheme: dark;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Class untuk menerapkan animasi */
-    .animate-fade-in {
-        /* Mencegah elemen terlihat sebelum animasi dimulai */
-        opacity: 0; 
-        animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    /* Class untuk menerapkan animasi dengan delay */
-    .animate-fade-in-delayed {
-        opacity: 0;
-        animation: fadeInDelayed 0.5s ease-out forwards;
-        /* Tambahkan delay di sini */
-        animation-delay: 0.2s; 
-    }
-
-    .modal-backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .date-input-dark-icon {
-        color-scheme: dark;
-    }
-</style>
+    </style>
 </head>
 
-<body class="bg-gray-900 text-gray-200 flex min-h-screen">
+<body class="text-neutral-200 flex min-h-screen font-sans">
 
-  <aside class="w-20 hover:w-64 bg-gray-800 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in">
-    <div class="flex items-center gap-3 mb-10 h-10">
-        <i class="fa-solid fa-user-shield fa-2x text-red-500 min-w-[32px] text-center"></i>
-        <span class="font-bold text-xl text-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
-    </div>
-
-    <div class="flex flex-col justify-between flex-1">
-        <nav class="flex flex-col gap-4">
-            <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-white bg-red-600 rounded-lg h-12">
-                <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
-                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
-            </a>
-            <a href="admin-users.html" class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg h-12">
-                <i class="fa-solid fa-address-book fa-fw fa-lg min-w-[32px] text-center"></i>
-                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Data Pengguna</span>
-            </a>
-        </nav>
-
-        <div>
-            <button onclick="logout()" class="w-full flex items-center gap-3 px-2 py-2 text-gray-400 hover:bg-red-800 hover:text-white rounded-lg h-12">
-                <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
-                <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
-            </button>
+    <aside class="w-20 hover:w-64 bg-neutral-950 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in border-r border-neutral-800">
+        <div class="flex items-center gap-4 mb-10 h-10">
+            <i class="fa-solid fa-user-shield fa-2x text-red-500 min-w-[32px] text-center"></i>
+            <span class="font-bold text-xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
         </div>
-    </div>
-</aside>
 
-  <main class="flex-1 p-8 ml-20 transition-all duration-300 animate-fade-in-delayed">
-    <button id="menu-toggle" class="lg:hidden mb-4 text-gray-300 hover:text-white">
-      <!-- <i class="fa-solid fa-bars fa-lg"></i> -->
-    </button>
+        <div class="flex flex-col justify-between flex-1">
+            <nav class="flex flex-col gap-4">
+                <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-white bg-gradient-to-r from-red-600 to-red-800 rounded-lg h-12 shadow-md shadow-red-500/20">
+                    <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
+                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
+                </a>
+                <a href="admin-users.html" class="flex items-center gap-3 px-2 py-2 text-neutral-400 hover:bg-neutral-800 hover:text-white rounded-lg h-12">
+                    <i class="fa-solid fa-address-book fa-fw fa-lg min-w-[32px] text-center"></i>
+                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Data Pengguna</span>
+                </a>
+            </nav>
 
-    <h1 class="text-3xl font-bold text-red-500 mb-6">Daftar Calon Anggota</h1>
-    <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left">
-          <thead>
-            <tr class="border-b border-gray-600">
-              <th class="p-3">Nama</th>
-              <th class="p-3">NIM</th>
-              <th class="p-3">Pilihan Divisi 1</th> <th class="p-3">Pilihan Divisi 2</th>
-              <th class="p-3">Status</th>
-              <th class="p-3 text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="registrationsTableBody">
-            <tr>
-              <td colspan="5" class="p-3 text-center">Memuat data...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </main>
-
-  
-    <div id="detailsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop p-4">
-        <div class="bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full p-6 border border-gray-700 max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 id="modalTitle" class="text-xl font-bold text-red-500">Kelola Pendaftar</h2>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            <div>
+                <button onclick="logout()" class="w-full flex items-center gap-4 px-3 py-2 text-neutral-400 hover:bg-red-900/50 hover:text-white rounded-lg h-12">
+                    <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
+                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
+                </button>
             </div>
-            <div class="overflow-y-auto pr-2">
-                <div class="mb-4">
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 ml-20 transition-all duration-300 animate-fade-in-delayed">
+        <h1 class="text-3xl font-bold text-red-600 mb-6">Daftar Calon Anggota</h1>
+        
+        <div class="bg-neutral-900 p-6 rounded-xl border border-neutral-800">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-neutral-700 text-neutral-400">
+                            <th class="p-4">Nama</th>
+                            <th class="p-4">NIM</th>
+                            <th class="p-4">Pilihan Divisi 1</th>
+                            <th class="p-4">Pilihan Divisi 2</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registrationsTableBody" class="divide-y divide-neutral-800">
+                        <tr>
+                            <td colspan="6" class="p-4 text-center text-neutral-500">Memuat data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div id="detailsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop p-4">
+        <div class="bg-neutral-950/70 backdrop-blur-lg rounded-2xl shadow-2xl shadow-red-900/10 max-w-2xl w-full p-8 border border-neutral-800 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center mb-6 flex-shrink-0">
+                <h2 id="modalTitle" class="text-2xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Kelola Pendaftar</h2>
+                <button onclick="closeModal()" class="text-neutral-500 hover:text-white text-3xl transition-colors">&times;</button>
+            </div>
+            <div class="overflow-y-auto pr-2 space-y-4">
+                <div class="space-y-2 text-neutral-300">
                     <p><strong>Nama:</strong> <span id="modalName"></span></p>
                     <p><strong>NIM:</strong> <span id="modalNim"></span></p>
-                    <p class="mt-2"><strong>Motivasi:</strong></p>
-                    <p id="modalMotivation" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
-                    <p class="mt-2"><strong>Visi & Misi:</strong></p>
-                    <p id="modalVisionMission" class="text-sm text-gray-300 bg-gray-700 p-2 rounded mt-1"></p>
+                    <div class="pt-2">
+                        <p><strong>Motivasi:</strong></p>
+                        <p id="modalMotivation" class="text-sm text-neutral-400 bg-neutral-900 p-3 rounded-md mt-1 border border-neutral-800"></p>
+                    </div>
+                    <div>
+                        <p><strong>Visi & Misi:</strong></p>
+                        <p id="modalVisionMission" class="text-sm text-neutral-400 bg-neutral-900 p-3 rounded-md mt-1 border border-neutral-800"></p>
+                    </div>
                 </div>
-                <form id="editForm" class="border-t border-gray-700 pt-4">
+                <form id="editForm" class="border-t border-neutral-800 pt-6">
                     <div class="space-y-4">
                         <div>
-                            <label for="modalStatus" class="block text-sm font-medium text-gray-300">Ubah Status Pendaftaran</label>
-                            <select id="modalStatus" name="status" class="mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded">
+                            <label for="modalStatus" class="block text-sm font-medium text-neutral-300">Ubah Status Pendaftaran</label>
+                            <select id="modalStatus" name="status" class="mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all">
                                 <option value="pending">Menunggu</option>
                                 <option value="interview">Wawancara</option>
                                 <option value="selection_1">Seleksi 1</option>
@@ -145,18 +133,17 @@
                             </select>
                         </div>
                         <div>
-                            <label for="modalInterview" class="block text-sm font-medium text-gray-300">Atur Jadwal Wawancara</label>
-                            <input type="date" id="modalInterview" name="interview_schedule" class="date-input-dark-icon mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded" disabled>
+                            <label for="modalInterview" class="block text-sm font-medium text-neutral-300">Atur Jadwal Wawancara</label>
+                            <input type="date" id="modalInterview" name="interview_schedule" class="date-input-dark-icon mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" disabled>
                         </div>
-                        
                         <div>
-                            <label for="modalLocation" class="block text-sm font-medium text-gray-300">Lokasi Wawancara</label>
-                            <input type="text" id="modalLocation" name="interview_location" placeholder="Online (Google Meet) / Offline (Sekre)" class="mt-1 w-full px-3 py-2 border border-gray-600 bg-gray-700 rounded" disabled>
+                            <label for="modalLocation" class="block text-sm font-medium text-neutral-300">Lokasi Wawancara</label>
+                            <input type="text" id="modalLocation" name="interview_location" placeholder="Online (Google Meet) / Offline (Sekre)" class="mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 rounded-lg placeholder:text-neutral-500 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" disabled>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-between items-center">
-                        <a id="modalCvLink" href="#" target="_blank" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700">Download CV</a>
-                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700">Simpan Perubahan</button>
+                    <div class="mt-8 flex justify-between items-center">
+                        <a id="modalCvLink" href="#" target="_blank" class="px-5 py-2 rounded-md font-medium bg-transparent border border-neutral-600 text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors">Download CV</a>
+                        <button type="submit" class="px-5 py-2 rounded-md text-white font-semibold bg-gradient-to-r from-red-600 to-red-800 hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
