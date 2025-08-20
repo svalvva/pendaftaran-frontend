@@ -135,26 +135,24 @@
                     if (regResponse.status === 200) {
                         const regData = await regResponse.json();
                         
-                        // --- LOGIKA BARU UNTUK WARNA STATUS ---
                         statusText.innerText = regData.status || 'Menunggu';
-                        // Hapus semua class warna sebelumnya
-                        statusText.classList.remove('text-yellow-400', 'text-green-400', 'text-red-400', 'text-blue-400');
-
-                        switch(regData.status) {
-                            case 'accepted':
-                                statusText.classList.add('text-green-400');
-                                break;
-                            case 'rejected':
-                                statusText.classList.add('text-red-400');
-                                break;
-                            case 'interview':
-                            case 'selection_1':
-                            case 'selection_2':
-                                statusText.classList.add('text-blue-400');
-                                break;
-                            default: // untuk 'pending'
-                                statusText.classList.add('text-yellow-400');
+                        
+                        // PERBAIKAN 2: Gunakan innerHTML untuk menampilkan format divisi
+                        divisionText.innerHTML = `${regData.division1} <span class="text-gray-400 text-lg">/ ${regData.division2}</span>`;
+                        
+                        locationText.innerText = regData.interview_location || 'Belum Ada';
+                        
+                        if (regData.interview_schedule) {
+                            const date = new Date(regData.interview_schedule);
+                            interviewText.innerText = date.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+                        } else {
+                            interviewText.innerText = 'Belum Ada';
                         }
+                        
+                        // Sembunyikan 'Aksi Cepat', Tampilkan 'Informasi'
+                        actionBox.style.display = 'none';
+                        infoBox.style.display = 'block';
+
                     } else {
                         // Jika user BELUM mengirim formulir
                         statusText.innerText = 'Belum Mendaftar';
