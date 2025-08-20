@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     birth_place: data.birth_place,
                     birth_date: data.birth_date,
                     email: data.email,
+                    phone_number: data.phone_number, // <-- PERBAIKAN DI SINI
                     password: data.password
                 }),
             });

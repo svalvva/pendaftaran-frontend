@@ -82,14 +82,20 @@
         <form id="submissionForm" class="space-y-6">
 
           <div>
-            <label for="division" class="block mb-2 font-medium text-gray-300">Pilihan Divisi</label>
-            <select id="division" name="division"
-              class="w-full px-3 py-2 border border-gray-600 bg-gray-700 text-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
-              required>
-              <option value="BPH">Badan Pengurus Harian</option>
-              <option value="PSDM">Pengembangan Sumber Daya Mahasiswa</option>
-              <option value="Humas">Hubungan Masyarakat</option>
-            </select>
+              <label for="division1" class="block mb-2 font-medium text-gray-300">Pilihan Divisi 1 (Prioritas)</label>
+              <select id="division1" name="division1" class="w-full ...">
+                  <option value="BPH">Badan Pengurus Harian</option>
+                  <option value="PSDM">Pengembangan Sumber Daya Mahasiswa</option>
+                  <option value="Humas">Hubungan Masyarakat</option>
+              </select>
+          </div>
+          <div>
+              <label for="division2" class="block mb-2 font-medium text-gray-300">Pilihan Divisi 2</label>
+              <select id="division2" name="division2" class="w-full ...">
+                  <option value="BPH">Badan Pengurus Harian</option>
+                  <option value="PSDM">Pengembangan Sumber Daya Mahasiswa</option>
+                  <option value="Humas">Hubungan Masyarakat</option>
+              </select>
           </div>
 
           <div>
@@ -149,6 +155,13 @@
 
         const token = getToken();
         const formData = new FormData(submissionForm);
+        const div1 = document.getElementById('division1').value;
+        const div2 = document.getElementById('division2').value;
+          
+        if (div1 === div2) {
+            Swal.fire('Pilihan Salah', 'Pilihan Divisi 1 dan 2 tidak boleh sama.', 'error');
+            return; // Hentikan pengiriman
+        }
 
         Swal.fire({
           title: 'Mengirim formulir...',

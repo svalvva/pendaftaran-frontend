@@ -137,7 +137,7 @@
                         const regData = await regResponse.json();
                         
                         statusText.innerText = regData.status || 'Menunggu';
-                        divisionText.innerText = regData.division || '-';
+                        divisionText.innerText = `${regData.division1} <span class="text-gray-400 text-lg">/ ${regData.division2}</span>`;
                         locationText.innerText = regData.interview_location || 'Belum Ada';
                         
                         if (regData.interview_schedule) {
