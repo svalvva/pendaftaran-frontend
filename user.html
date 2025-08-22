@@ -120,6 +120,7 @@
             const locationText = document.getElementById('locationText');
             const actionBox = document.getElementById('actionBox');
             const infoBox = document.getElementById('infoBox'); // <-- Elemen baru
+            const formSidebarLink = document.querySelector('a[href="form.html"]');
 
             async function updateDashboardData() {
                 try {
@@ -150,6 +151,8 @@
                         // Sembunyikan 'Aksi Cepat', Tampilkan 'Informasi'
                         actionBox.style.display = 'none';
                         infoBox.style.display = 'block';
+                        // SEMBUNYIKAN LINK
+                        if(formSidebarLink) formSidebarLink.style.display = 'none';
 
                     } else {
                         // Jika user BELUM mengirim formulir
@@ -161,6 +164,8 @@
                         // Tampilkan 'Aksi Cepat', Sembunyikan 'Informasi'
                         actionBox.style.display = 'block';
                         infoBox.style.display = 'none';
+                        // TAMPILKAN KEMBALI LINK
+                        if(formSidebarLink) formSidebarLink.style.display = 'flex';
                     }
                 } catch (error) {
                     console.error("Gagal memperbarui data pendaftaran:", error);

@@ -126,6 +126,38 @@
   <script src="js/auth.js"></script>
   <script src="js/dashboard.js"></script>
   <script>
+    // CEK APAKAH USER SUDAH MENDAFTAR
+    document.addEventListener('DOMContentLoaded', async () => {
+        const token = getToken();
+        if (!token) { 
+            // Cek apakah user sudah login atau belum
+            window.location.href = 'login.html';
+            return;
+        }
+    
+        try {
+            const regResponse = await fetch('http://localhost:8080/api/user/my-registration', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+    
+            if (regResponse.status === 200) {
+                // Jika status 200, artinya pendaftaran sudah ada.
+                await Swal.fire({
+                    icon: 'info',
+                    title: 'Formulir Sudah Terkirim',
+                    text: 'Anda sudah pernah mengirimkan formulir pendaftaran. Anda akan diarahkan kembali ke dashboard.',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    background: '#1f1f1f',
+                    color: '#e5e5e5'
+                });
+                window.location.href = 'user.html';
+            }
+        } catch (error) {
+            console.error("Gagal memeriksa status pendaftaran:", error);
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', async () => {
       // Lindungi halaman ini: jika user belum login, tendang ke halaman login
       const userData = await fetchUserData();
