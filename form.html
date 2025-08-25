@@ -2,13 +2,13 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulir Pendaftaran - HIMATIF</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran - HIMATIF</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -28,7 +28,7 @@
 
 <body class="bg-black text-neutral-200 flex min-h-screen font-sans">
 
-  <aside class="w-20 hover:w-64 bg-neutral-950 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group border-r border-neutral-800">
+    <aside class="hidden lg:flex w-20 hover:w-64 bg-neutral-950 p-4 flex-col shadow-lg transition-all duration-300 ease-in-out group border-r border-neutral-800">
         <div class="flex items-center gap-3 mb-10 h-10">
             <i class="fa-solid fa-layer-group fa-2x text-red-500 min-w-[32px] text-center"></i>
             <span class="font-bold text-xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF</span>
@@ -60,11 +60,11 @@
         </div>
     </aside>
 
-  <main class="flex-1 p-8 content-fade">
-    <div class="max-w-3xl mx-auto">
-            <h1 class="text-4xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent mb-8">Formulir Pendaftaran Himpunan</h1>
+    <main class="flex-1 p-4 lg:p-8 content-fade pb-24 lg:pb-8">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent mb-8">Formulir Pendaftaran Himpunan</h1>
 
-            <div class="bg-neutral-900 p-8 rounded-xl border border-neutral-800">
+            <div class="bg-neutral-900 p-6 lg:p-8 rounded-xl border border-neutral-800">
                 <form id="submissionForm" class="space-y-6">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,63 +121,105 @@
                 </form>
             </div>
         </div>
-  </main>
+    </main>
 
-  <script src="js/auth.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      // Lindungi halaman ini: jika user belum login, tendang ke halaman login
-      const userData = await fetchUserData();
-      if (!userData) {
-        alert("Anda harus login untuk mengakses halaman ini.");
-        window.location.href = 'login.html';
-        return;
-      }
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-neutral-950 border-t border-neutral-800 flex justify-around">
+        <a href="user.html" class="flex flex-col items-center justify-center w-full h-16 text-neutral-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-house fa-lg"></i>
+            <span class="text-xs mt-1.5">Home</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center justify-center w-full h-16 text-neutral-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-user fa-lg"></i>
+            <span class="text-xs mt-1.5">Profil</span>
+        </a>
+        <a href="form.html" id="formBottomLink" class="flex flex-col items-center justify-center w-full h-16 text-red-500">
+            <i class="fa-solid fa-file-lines fa-lg"></i>
+            <span class="text-xs mt-1.5">Formulir</span>
+        </a>
+        <button onclick="logout()" class="flex flex-col items-center justify-center w-full h-16 text-neutral-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+            <span class="text-xs mt-1.5">Logout</span>
+        </button>
+    </nav>
 
-      const submissionForm = document.getElementById('submissionForm');
-      submissionForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        // Gabungkan kedua event listener menjadi satu agar lebih efisien
+        document.addEventListener('DOMContentLoaded', async () => {
+            // --- BAGIAN 1: PENCEGAHAN PENGISIAN GANDA & PROTEKSI HALAMAN ---
+            const token = getToken();
+            if (!token) { 
+                alert("Anda harus login untuk mengakses halaman ini.");
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                const regResponse = await fetch('http://localhost:8080/api/user/my-registration', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+            
+                if (regResponse.status === 200) {
+                    await Swal.fire({
+                        icon: 'info',
+                        title: 'Formulir Sudah Terkirim',
+                        text: 'Anda sudah pernah mengirimkan formulir pendaftaran. Anda akan diarahkan kembali ke dashboard.',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        background: '#1f1f1f',
+                        color: '#e5e5e5'
+                    });
+                    window.location.href = 'user.html';
+                    return; // Hentikan eksekusi skrip jika sudah mendaftar
+                }
+            } catch (error) {
+                console.error("Gagal memeriksa status pendaftaran:", error);
+            }
 
-        const token = getToken();
-        const formData = new FormData(submissionForm);
-        const div1 = document.getElementById('division1').value;
-        const div2 = document.getElementById('division2').value;
-          
-        if (div1 === div2) {
-            Swal.fire('Pilihan Salah', 'Pilihan Divisi 1 dan 2 tidak boleh sama.', 'error');
-            return; // Hentikan pengiriman
-        }
+            // --- BAGIAN 2: LOGIKA PENGIRIMAN FORMULIR ---
+            const submissionForm = document.getElementById('submissionForm');
+            submissionForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
 
-        Swal.fire({
-          title: 'Mengirim formulir...',
-          text: 'Mohon tunggu sebentar.',
-          allowOutsideClick: false,
-          didOpen: () => { Swal.showLoading() }
+                const formData = new FormData(submissionForm);
+                const div1 = document.getElementById('division1').value;
+                const div2 = document.getElementById('division2').value;
+                
+                if (div1 === div2) {
+                    Swal.fire('Pilihan Salah', 'Pilihan Divisi 1 dan 2 tidak boleh sama.', 'error');
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Mengirim formulir...',
+                    text: 'Mohon tunggu sebentar.',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading() }
+                });
+
+                try {
+                    const response = await fetch('http://localhost:8080/api/user/registration', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Gagal mengirim formulir.');
+                    }
+
+                    await Swal.fire('Berhasil!', 'Formulir pendaftaran Anda telah terkirim.', 'success');
+                    window.location.href = 'user.html';
+
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                }
+            });
         });
-
-        try {
-          const response = await fetch('http://localhost:8080/api/user/registration', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
-            body: formData,
-          });
-
-          const result = await response.json();
-
-          if (!response.ok) {
-            throw new Error(result.error || 'Gagal mengirim formulir.');
-          }
-
-          await Swal.fire('Berhasil!', 'Formulir pendaftaran Anda telah terkirim.', 'success');
-          window.location.href = 'user.html';
-
-        } catch (error) {
-          Swal.fire('Error', error.message, 'error');
-        }
-      });
-    });
-  </script>
+    </script>
 </body>
 
 </html>
