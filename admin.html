@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInDelayed {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         body {
@@ -25,13 +28,8 @@
         }
 
         .animate-fade-in {
-            opacity: 0; 
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        .animate-fade-in-delayed {
             opacity: 0;
-            animation: fadeInDelayed 0.5s ease-out forwards;
-            animation-delay: 0.2s; 
+            animation: fadeIn 0.5s ease-out forwards;
         }
 
         .modal-backdrop {
@@ -47,64 +45,97 @@
 
 <body class="text-neutral-200 flex min-h-screen font-sans">
 
-    <aside class="w-20 hover:w-64 bg-neutral-950 p-4 flex flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in border-r border-neutral-800">
+    <aside
+        class="hidden lg:flex w-20 hover:w-64 bg-neutral-950 p-4 flex-col shadow-lg transition-all duration-300 ease-in-out group animate-fade-in border-r border-neutral-800">
         <div class="flex items-center gap-4 mb-10 h-10">
             <i class="fa-solid fa-user-shield fa-2x text-red-500 min-w-[32px] text-center"></i>
-            <span class="font-bold text-xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF ADMIN</span>
+            <span
+                class="font-bold text-xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">HIMATIF
+                ADMIN</span>
         </div>
 
         <div class="flex flex-col justify-between flex-1">
             <nav class="flex flex-col gap-4">
-                <a href="admin.html" class="flex items-center gap-3 px-2 py-2 text-white bg-gradient-to-r from-red-600 to-red-800 rounded-lg h-12 shadow-md shadow-red-500/20">
+                <a href="admin.html"
+                    class="flex items-center gap-3 px-2 py-2 text-white bg-gradient-to-r from-red-600 to-red-800 rounded-lg h-12 shadow-md shadow-red-500/20">
                     <i class="fa-solid fa-users fa-fw fa-lg min-w-[32px] text-center"></i>
-                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
+                    <span
+                        class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Pendaftar</span>
                 </a>
-                <a href="admin-users.html" class="flex items-center gap-3 px-2 py-2 text-neutral-400 hover:bg-neutral-800 hover:text-white rounded-lg h-12">
+                <a href="admin-users.html"
+                    class="flex items-center gap-3 px-2 py-2 text-neutral-400 hover:bg-neutral-800 hover:text-white rounded-lg h-12">
                     <i class="fa-solid fa-address-book fa-fw fa-lg min-w-[32px] text-center"></i>
-                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Data Pengguna</span>
+                    <span
+                        class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Data
+                        Pengguna</span>
                 </a>
             </nav>
 
             <div>
-                <button onclick="logout()" class="w-full flex items-center gap-4 px-3 py-2 text-neutral-400 hover:bg-red-900/50 hover:text-white rounded-lg h-12">
+                <button onclick="logout()"
+                    class="w-full flex items-center gap-4 px-3 py-2 text-neutral-400 hover:bg-red-900/50 hover:text-white rounded-lg h-12">
                     <i class="fa-solid fa-right-from-bracket fa-fw fa-lg min-w-[32px] text-center"></i>
-                    <span class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log Out</span>
+                    <span
+                        class="font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">Log
+                        Out</span>
                 </button>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 p-8 ml-20 transition-all duration-300 animate-fade-in-delayed">
-        <h1 class="text-3xl font-bold text-red-600 mb-6">Daftar Calon Anggota</h1>
-        
-        <div class="bg-neutral-900 p-6 rounded-xl border border-neutral-800">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="border-b border-neutral-700 text-neutral-400">
-                            <th class="p-4">Nama</th>
-                            <th class="p-4">NIM</th>
-                            <th class="p-4">Pilihan Divisi 1</th>
-                            <th class="p-4">Pilihan Divisi 2</th>
-                            <th class="p-4">Status</th>
-                            <th class="p-4 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="registrationsTableBody" class="divide-y divide-neutral-800">
-                        <tr>
-                            <td colspan="6" class="p-4 text-center text-neutral-500">Memuat data...</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <main class="flex-1 p-4 lg:p-8 animate-fade-in pb-24 lg:pb-8">
+        <h1 class="text-2xl lg:text-3xl font-bold text-red-600 mb-6">Daftar Calon Anggota</h1>
+
+        <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 mb-6 flex flex-col md:flex-row gap-4">
+            <div class="relative flex-grow">
+                <input type="text" id="searchInput" placeholder="Cari Nama atau NIM..."
+                    class="w-full pl-10 pr-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"></i>
+            </div>
+            <select id="statusFilter"
+                class="w-full md:w-48 bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <option value="">Semua Status</option>
+                <option value="pending">Menunggu</option>
+                <option value="interview">Wawancara</option>
+                <option value="selection_1">Seleksi 1</option>
+                <option value="selection_2">Seleksi 2</option>
+                <option value="accepted">Diterima</option>
+                <option value="rejected">Ditolak</option>
+            </select>
+            <select id="divisionFilter"
+                class="w-full md:w-56 bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <option value="">Semua Divisi</option>
+                <option value="Minat dan Bakat">Minat dan Bakat</option>
+                <option value="Kaderisasi">Kaderisasi</option>
+                <option value="Hubungan Masyarakat">Hubungan Masyarakat</option>
+                <option value="Multimedia">Multimedia</option>
+                <option value="Akademik">Akademik</option>
+                <option value="Kepelatihan">Kepelatihan</option>
+            </select>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 overflow-hidden">
+            <div class="hidden lg:flex border-b border-neutral-700 text-neutral-400 font-semibold">
+                <div class="p-4 w-1/4">Nama</div>
+                <div class="p-4 w-1/4">NIM</div>
+                <div class="p-4 w-1/4">Divisi Pilihan</div>
+                <div class="p-4 w-1/4 text-center">Status & Aksi</div>
+            </div>
+            <div id="registrationsContainer" class="divide-y divide-neutral-800">
+                <div class="p-4 text-center text-neutral-500">Memuat data...</div>
             </div>
         </div>
     </main>
 
     <div id="detailsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop p-4">
-        <div class="bg-neutral-950/70 backdrop-blur-lg rounded-2xl shadow-2xl shadow-red-900/10 max-w-2xl w-full p-8 border border-neutral-800 max-h-[90vh] flex flex-col">
+        <div
+            class="bg-neutral-950/70 backdrop-blur-lg rounded-2xl shadow-2xl shadow-red-900/10 max-w-2xl w-full p-6 lg:p-8 border border-neutral-800 max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center mb-6 flex-shrink-0">
-                <h2 id="modalTitle" class="text-2xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Kelola Pendaftar</h2>
-                <button onclick="closeModal()" class="text-neutral-500 hover:text-white text-3xl transition-colors">&times;</button>
+                <h2 id="modalTitle"
+                    class="text-xl lg:text-2xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                    Kelola Pendaftar</h2>
+                <button onclick="closeModal()"
+                    class="text-neutral-500 hover:text-white text-3xl transition-colors">&times;</button>
             </div>
             <div class="overflow-y-auto pr-2 space-y-4">
                 <div class="space-y-2 text-neutral-300">
@@ -112,224 +143,257 @@
                     <p><strong>NIM:</strong> <span id="modalNim"></span></p>
                     <div class="pt-2">
                         <p><strong>Motivasi:</strong></p>
-                        <p id="modalMotivation" class="text-sm text-neutral-400 bg-neutral-900 p-3 rounded-md mt-1 border border-neutral-800"></p>
+                        <p id="modalMotivation"
+                            class="text-sm text-neutral-400 bg-neutral-900 p-3 rounded-md mt-1 border border-neutral-800">
+                        </p>
                     </div>
                     <div>
                         <p><strong>Visi & Misi:</strong></p>
-                        <p id="modalVisionMission" class="text-sm text-neutral-400 bg-neutral-900 p-3 rounded-md mt-1 border border-neutral-800"></p>
+                        <p id="modalVisionMission"
+                            class="text-sm text-neutral-400 bg-neutral-900 p-3 rounded-md mt-1 border border-neutral-800">
+                        </p>
                     </div>
                 </div>
                 <form id="editForm" class="border-t border-neutral-800 pt-6">
                     <div class="space-y-4">
-                        <div>
-                            <label for="modalStatus" class="block text-sm font-medium text-neutral-300">Ubah Status Pendaftaran</label>
-                            <select id="modalStatus" name="status" class="mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all">
-                                <option value="pending">Menunggu</option>
-                                <option value="interview">Wawancara</option>
-                                <option value="selection_1">Seleksi 1</option>
-                                <option value="selection_2">Seleksi 2</option>
-                                <option value="accepted">Diterima</option>
-                                <option value="rejected">Ditolak</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="modalInterview" class="block text-sm font-medium text-neutral-300">Atur Jadwal Wawancara</label>
-                            <input type="date" id="modalInterview" name="interview_schedule" class="date-input-dark-icon mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" disabled>
-                        </div>
-                        <div>
-                            <label for="modalLocation" class="block text-sm font-medium text-neutral-300">Lokasi Wawancara</label>
-                            <input type="text" id="modalLocation" name="interview_location" placeholder="Online (Google Meet) / Offline (Sekre)" class="mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 rounded-lg placeholder:text-neutral-500 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" disabled>
-                        </div>
+                        <select id="modalStatus" name="status"
+                            class="mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"></select>
+                        <input type="date" id="modalInterview" name="interview_schedule"
+                            class="date-input-dark-icon mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                            disabled>
+                        <input type="text" id="modalLocation" name="interview_location"
+                            placeholder="Online (Google Meet) / Offline (Sekre)"
+                            class="mt-1 w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 rounded-lg placeholder:text-neutral-500 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                            disabled>
                     </div>
-                    <div class="mt-8 flex justify-between items-center">
-                        <a id="modalCvLink" href="#" target="_blank" class="px-5 py-2 rounded-md font-medium bg-transparent border border-neutral-600 text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors">Download CV</a>
-                        <button type="submit" class="px-5 py-2 rounded-md text-white font-semibold bg-gradient-to-r from-red-600 to-red-800 hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all">Simpan Perubahan</button>
+                    <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <a id="modalCvLink" href="#" target="_blank"
+                            class="w-full sm:w-auto px-5 py-2 rounded-md font-medium bg-transparent border border-neutral-600 text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors text-center">Download
+                            CV</a>
+                        <button type="submit"
+                            class="w-full sm:w-auto px-5 py-2 rounded-md text-white font-semibold bg-gradient-to-r from-red-600 to-red-800 hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all">Simpan
+                            Perubahan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-  <script src="js/auth.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script>
-    // --- Variabel Global & Fungsi Pembantu ---
-    let allRegistrations = [];
-    let currentEditingId = null;
-    const modal = document.getElementById('detailsModal');
-    const statusSelect = document.getElementById('modalStatus');
-    const interviewInput = document.getElementById('modalInterview');
-    const locationInput = document.getElementById('modalLocation');
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-neutral-950 border-t border-neutral-800 flex justify-around">
+        <a href="admin.html" class="flex flex-col items-center justify-center w-full h-16 text-red-500">
+            <i class="fa-solid fa-users fa-lg"></i>
+            <span class="text-xs mt-1.5">Pendaftar</span>
+        </a>
+        <a href="admin-users.html"
+            class="flex flex-col items-center justify-center w-full h-16 text-neutral-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-address-book fa-lg"></i>
+            <span class="text-xs mt-1.5">Pengguna</span>
+        </a>
+        <button onclick="logout()"
+            class="flex flex-col items-center justify-center w-full h-16 text-neutral-400 hover:text-white transition-colors">
+            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+            <span class="text-xs mt-1.5">Logout</span>
+        </button>
+    </nav>
 
-    function closeModal() {
-      modal.classList.add('hidden');
-    }
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        let allRegistrations = [];
+        let currentEditingId = null;
+        const modal = document.getElementById('detailsModal');
+        const statusSelect = document.getElementById('modalStatus');
+        const interviewInput = document.getElementById('modalInterview');
+        const locationInput = document.getElementById('modalLocation');
 
-    // --- Logika Inti ---
-    function showModal(regId) {
-      currentEditingId = regId;
-      const reg = allRegistrations.find(r => r.id === regId);
-      if (reg) {
-        // Mengisi bagian detail
-        document.getElementById('modalTitle').innerText = `Kelola: ${reg.name}`;
-        document.getElementById('modalName').innerText = reg.name;
-        document.getElementById('modalNim').innerText = reg.nim;
-        document.getElementById('modalMotivation').innerText = reg.motivation;
-        document.getElementById('modalVisionMission').innerText = reg.vision_mission;
-        document.getElementById('modalCvLink').href = `/api/${reg.cv_path}`;
+        // -- PERUBAHAN 2: MEMBUAT FUNGSI BARU UNTUK MERENDER DATA --
+        function renderRegistrations(registrationsToRender) {
+            const container = document.getElementById('registrationsContainer');
+            container.innerHTML = '';
 
-        // Mengisi bagian form
-        statusSelect.value = reg.status;
-        interviewInput.value = reg.interview_schedule ? reg.interview_schedule.slice(0, 10) : '';
-        locationInput.value = reg.interview_location || '';
-        // Menyesuaikan kondisi form berdasarkan status saat ini
-        if (statusSelect.value === 'interview') {
-          interviewInput.disabled = false;
-        } else {
-          interviewInput.disabled = true;
-        }
-        statusSelect.dispatchEvent(new Event('change')); // Trigger perubahan untuk mengatur kondisi form
-        modal.classList.remove('hidden');
-      }
-    }
-
-    async function loadRegistrations() {
-      const tableBody = document.getElementById('registrationsTableBody');
-      try {
-        const token = getToken();
-        const response = await fetch('http://localhost:8080/api/admin/registrations-with-details', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!response.ok) throw new Error('Gagal memuat data pendaftar.');
-
-        allRegistrations = await response.json();
-        tableBody.innerHTML = '';
-
-        if (allRegistrations.length === 0) {
-          tableBody.innerHTML = '<tr><td colspan="5" class="p-3 text-center">Belum ada pendaftar.</td></tr>';
-          return;
-        }
-
-        allRegistrations.forEach(reg => {
-          const row = `
-                        <tr class="border-b border-gray-700 hover:bg-gray-700/50">
-                            <td class="p-3">${reg.name}</td>
-                            <td class="p-3">${reg.nim}</td>
-                            <td class="p-3">${reg.division1}</td> <td class="p-3">${reg.division2}</td>
-                            <td class="p-3 font-semibold">${reg.status}</td>
-                            <td class="p-3 text-center">
-                                <button onclick="showModal('${reg.id}')" class="px-3 py-1 text-sm bg-blue-600 rounded hover:bg-blue-700">Kelola</button>
-                                <button onclick="deleteRegistration('${reg.id}', '${reg.name}')" class="px-3 py-1 text-sm bg-red-600 rounded hover:bg-red-700 transition-colors ml-2">Hapus</button>
-                            </td>
-                        </tr>
-                    `;
-          tableBody.innerHTML += row;
-        });
-      } catch (error) {
-        tableBody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">${error.message}</td></tr>`;
-      }
-    }
-
-    // --- Event Listeners ---
-    statusSelect.addEventListener('change', () => {
-            if (statusSelect.value === 'interview') {
-                interviewInput.disabled = false;
-                locationInput.disabled = false; // <-- Tambahkan ini
-            } else {
-                interviewInput.disabled = true;
-                locationInput.disabled = true; // <-- Tambahkan ini
-                interviewInput.value = '';
-                locationInput.value = ''; // <-- Tambahkan ini
+            if (registrationsToRender.length === 0) {
+                container.innerHTML = '<div class="p-4 text-center text-neutral-400">Tidak ada pendaftar yang cocok dengan filter.</div>';
+                return;
             }
-        });
 
-    document.getElementById('editForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!currentEditingId) return;
+            registrationsToRender.forEach(reg => {
+                const item = document.createElement('div');
+                item.className = 'p-4 flex flex-col lg:flex-row lg:items-center';
+                item.innerHTML = `
+                <div class="w-full lg:w-1/4 mb-2 lg:mb-0">
+                    <div class="font-semibold">${reg.name}</div>
+                    <div class="text-sm text-neutral-400 lg:hidden">${reg.nim}</div>
+                </div>
+                <div class="hidden lg:block lg:w-1/4">${reg.nim}</div>
+                <div class="w-full lg:w-1/4 text-sm text-neutral-300 mb-4 lg:mb-0">
+                    <span class="font-semibold text-neutral-400">Divisi:</span> ${reg.division1} / ${reg.division2}
+                </div>
+                <div class="w-full lg:w-1/4 flex flex-col lg:flex-row lg:justify-end lg:items-center gap-2">
+                    <div class="lg:w-1/2 text-center font-semibold capitalize bg-neutral-800 lg:bg-transparent py-2 lg:py-0 rounded-md">${reg.status}</div>
+                    <div class="flex gap-2 justify-center mt-2 lg:mt-0 lg:w-1/2">
+                        <button onclick="showModal('${reg.id}')" class="flex-1 lg:flex-none px-3 py-2 text-sm bg-blue-600 rounded hover:bg-blue-700 transition-colors">Kelola</button>
+                        <button onclick="deleteRegistration('${reg.id}', '${reg.name}')" class="flex-1 lg:flex-none px-3 py-2 text-sm bg-red-600 rounded hover:bg-red-700 transition-colors">Hapus</button>
+                    </div>
+                </div>
+            `;
+                container.appendChild(item);
+            });
+        }
 
-      const updatedData = {
-        status: statusSelect.value,
-        interview_schedule: interviewInput.value,
-        interview_location: locationInput.value,
-      };
+        // -- PERUBAHAN 3: MEMBUAT FUNGSI UNTUK MENERAPKAN FILTER --
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusTerm = document.getElementById('statusFilter').value;
+            const divisionTerm = document.getElementById('divisionFilter').value;
 
-      try {
-        const token = getToken();
-        const response = await fetch(`http://localhost:8080/api/admin/registrations/${currentEditingId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(updatedData)
-        });
-        if (!response.ok) throw new Error('Gagal menyimpan perubahan.');
+            let filteredRegistrations = allRegistrations.filter(reg => {
+                const nameMatch = reg.name.toLowerCase().includes(searchTerm);
+                const nimMatch = reg.nim.toLowerCase().includes(searchTerm);
+                const statusMatch = statusTerm ? reg.status === statusTerm : true;
+                const divisionMatch = divisionTerm ? (reg.division1 === divisionTerm || reg.division2 === divisionTerm) : true;
 
-        await Swal.fire('Berhasil!', 'Data pendaftar telah diperbarui.', 'success');
-        closeModal();
-        loadRegistrations(); // Muat ulang data tabel
-      } catch (error) {
-        Swal.fire('Gagal!', error.message, 'error');
-      }
-    });
+                return (nameMatch || nimMatch) && statusMatch && divisionMatch;
+            });
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      const userData = await fetchUserData();
-      if (!userData || userData.role !== 'admin') {
-        alert("Akses ditolak. Halaman ini khusus untuk Admin.");
-        window.location.href = 'index.html';
-        return;
-      }
-      loadRegistrations();
-    });
+            renderRegistrations(filteredRegistrations);
+        }
 
-    async function deleteRegistration(regId, regName) {
-        const result = await Swal.fire({
-            title: 'Anda Yakin?',
-            text: `Anda akan menghapus pendaftaran atas nama "${regName}". Aksi ini tidak dapat dibatalkan.`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal',
-            background: '#1f1f1f', // Latar belakang gelap untuk SweetAlert
-            color: '#e5e5e5'      // Teks terang untuk SweetAlert
-        });
+        function closeModal() { modal.classList.add('hidden'); }
 
-        if (result.isConfirmed) {
+        function showModal(regId) {
+            currentEditingId = regId;
+            const reg = allRegistrations.find(r => r.id === regId);
+            if (reg) {
+                document.getElementById('modalTitle').innerText = `Kelola: ${reg.name}`;
+                document.getElementById('modalName').innerText = reg.name;
+                document.getElementById('modalNim').innerText = reg.nim;
+                document.getElementById('modalMotivation').innerText = reg.motivation;
+                document.getElementById('modalVisionMission').innerText = reg.vision_mission;
+                document.getElementById('modalCvLink').href = reg.cv_url;
+
+                statusSelect.value = reg.status;
+                interviewInput.value = reg.interview_schedule ? reg.interview_schedule.slice(0, 10) : '';
+                locationInput.value = reg.interview_location || '';
+
+                statusSelect.dispatchEvent(new Event('change'));
+                modal.classList.remove('hidden');
+            }
+        }
+
+        async function loadRegistrations() {
             try {
                 const token = getToken();
-                const response = await fetch(`http://localhost:8080/api/admin/registrations/${regId}`, {
-                    method: 'DELETE',
+                const response = await fetch('http://localhost:8080/api/admin/registrations-with-details', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+                if (!response.ok) throw new Error('Gagal memuat data pendaftar.');
 
-                if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.error || 'Gagal menghapus pendaftaran.');
-                }
-
-                await Swal.fire({
-                    title: 'Dihapus!',
-                    text: 'Pendaftaran telah berhasil dihapus.',
-                    icon: 'success',
-                    background: '#1f1f1f',
-                    color: '#e5e5e5'
-                });
-                loadRegistrations(); // Muat ulang data tabel
+                allRegistrations = await response.json();
+                applyFilters(); // -- PERUBAHAN 4: Panggil applyFilters, bukan render langsung --
             } catch (error) {
-                await Swal.fire({
-                    title: 'Gagal!',
-                    text: error.message,
-                    icon: 'error',
-                    background: '#1f1f1f',
-                    color: '#e5e5e5'
-                });
+                document.getElementById('registrationsContainer').innerHTML = `<div class="p-4 text-center text-red-500">${error.message}</div>`;
             }
         }
-    }
-  </script>
+
+        statusSelect.addEventListener('change', () => {
+            if (statusSelect.value === 'interview') {
+                interviewInput.disabled = false;
+                locationInput.disabled = false;
+            } else {
+                interviewInput.disabled = true;
+                locationInput.disabled = true;
+                interviewInput.value = '';
+                locationInput.value = '';
+            }
+        });
+
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentEditingId) return;
+            const updatedData = {
+                status: statusSelect.value,
+                interview_schedule: interviewInput.value,
+                interview_location: locationInput.value,
+            };
+            try {
+                const token = getToken();
+                const response = await fetch(`http://localhost:8080/api/admin/registrations/${currentEditingId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+                if (!response.ok) throw new Error('Gagal menyimpan perubahan.');
+                await Swal.fire('Berhasil!', 'Data pendaftar telah diperbarui.', 'success');
+                closeModal();
+                loadRegistrations();
+            } catch (error) {
+                Swal.fire('Gagal!', error.message, 'error');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userData = await fetchUserData();
+            if (!userData || userData.role !== 'admin') {
+                alert("Akses ditolak. Halaman ini khusus untuk Admin.");
+                window.location.href = 'index.html';
+                return;
+            }
+            loadRegistrations();
+
+            // -- PERUBAHAN 5: MENAMBAHKAN EVENT LISTENER UNTUK SETIAP FILTER --
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+            document.getElementById('divisionFilter').addEventListener('change', applyFilters);
+        });
+
+        async function deleteRegistration(regId, regName) {
+            const result = await Swal.fire({
+                title: 'Anda Yakin?',
+                text: `Anda akan menghapus pendaftaran atas nama "${regName}". Aksi ini tidak dapat dibatalkan.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                background: '#1f1f1f',
+                color: '#e5e5e5'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    const token = getToken();
+                    const response = await fetch(`http://localhost:8080/api/admin/registrations/${regId}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!response.ok) {
+                        const errData = await response.json();
+                        throw new Error(errData.error || 'Gagal menghapus pendaftaran.');
+                    }
+                    await Swal.fire({
+                        title: 'Dihapus!',
+                        text: 'Pendaftaran telah berhasil dihapus.',
+                        icon: 'success',
+                        background: '#1f1f1f',
+                        color: '#e5e5e5'
+                    });
+                    loadRegistrations(); // Muat ulang data untuk memperbarui daftar
+                } catch (error) {
+                    await Swal.fire({
+                        title: 'Gagal!',
+                        text: error.message,
+                        icon: 'error',
+                        background: '#1f1f1f',
+                        color: '#e5e5e5'
+                    });
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
