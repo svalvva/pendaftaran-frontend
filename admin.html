@@ -172,9 +172,13 @@
                         </div>
                     </div>
                     <div class="mt-8 flex justify-between items-center">
+                    <div class="flex gap-4">
                         <a id="modalCvLink" href="#" target="_blank" class="px-5 py-2 rounded-md font-medium bg-transparent border border-neutral-600 text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors">Download CV</a>
-                        <button type="submit" class="px-5 py-2 rounded-md text-white font-semibold bg-gradient-to-r from-red-600 to-red-800 hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all">Simpan Perubahan</button>
+                        
+                        <a id="modalCertificateLink" href="#" target="_blank" class="px-5 py-2 rounded-md font-medium bg-transparent border border-blue-600 text-neutral-300 hover:bg-blue-900/50 hover:text-white transition-colors" style="display: none;">Download Sertifikat</a>
                     </div>
+                    <button type="submit" class="px-5 py-2 rounded-md text-white font-semibold bg-gradient-to-r from-red-600 to-red-800 hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all">Simpan Perubahan</button>
+                </div>
                 </form>
             </div>
         </div>
@@ -270,12 +274,26 @@
                 document.getElementById('modalNim').innerText = reg.nim;
                 document.getElementById('modalMotivation').innerText = reg.motivation;
                 document.getElementById('modalVisionMission').innerText = reg.vision_mission;
-                document.getElementById('modalCvLink').href = reg.cv_url;
-
+            
+                // --- PERUBAHAN DI SINI ---
+                // Atur href pada link unduh CV dengan URL dari data registrasi
+                const cvLink = document.getElementById('modalCvLink');
+                cvLink.href = reg.cv_url; 
+                    
+                // --- LOGIKA BARU UNTUK SERTIFIKAT ---
+                const certificateLink = document.getElementById('modalCertificateLink');
+                if (reg.certificate_url) { // Cek apakah URL sertifikat ada
+                    certificateLink.href = reg.certificate_url;
+                    certificateLink.style.display = 'inline-block'; // Tampilkan tombol
+                } else {
+                    certificateLink.style.display = 'none'; // Sembunyikan jika tidak ada
+                }
+                // ------------------------------------
+                
                 statusSelect.value = reg.status;
                 interviewInput.value = reg.interview_schedule ? reg.interview_schedule.slice(0, 10) : '';
                 locationInput.value = reg.interview_location || '';
-
+                
                 statusSelect.dispatchEvent(new Event('change'));
                 modal.classList.remove('hidden');
             }
