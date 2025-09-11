@@ -9,71 +9,70 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Animasi fade-in untuk seluruh halaman */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         body {
-            /* Menambahkan efek gradien radial halus pada background */
             background-color: #000000;
             background-image: radial-gradient(circle at top, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 20%);
+        }
+
+        .login-card {
             animation: fadeIn 0.6s ease-in-out;
         }
     </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4 font-sans">
-    <!-- Kontainer utama dengan desain modern -->
-    <div class="bg-neutral-900 rounded-xl shadow-2xl shadow-red-900/10 max-w-md w-full p-8 border border-neutral-800">
-        <div class="mb-8 text-center">
-            <!-- Judul dengan efek gradien yang konsisten -->
-            <h1 class="font-extrabold text-3xl bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
-                Login HIMATIF
+    
+    <div class="login-card bg-neutral-950/50 backdrop-blur-lg rounded-2xl shadow-2xl shadow-red-900/10 max-w-md w-full p-8 border border-neutral-800">
+        
+        <div class="mb-8 text-center flex flex-col items-center gap-3">
+            <i class="fa-solid fa-right-to-bracket text-red-500 text-3xl"></i>
+            <h1 class="font-bold text-3xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                Selamat Datang Kembali
             </h1>
-            <p class="text-neutral-500 mt-2">Selamat datang kembali!</p>
+            <p class="text-neutral-400 text-sm">Login untuk melanjutkan ke dashboard Anda.</p>
         </div>
         
         <form id="loginForm" class="space-y-6">
             <div>
-                <label class="block mb-2 font-medium text-neutral-400">NIM</label>
+                <label class="block mb-2 font-medium text-neutral-300">NIM</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5">
                         <i class="fa-solid fa-user text-neutral-500"></i>
                     </span>
                     <input type="text" name="NPM"
-                        class="w-full pl-10 pr-3 py-2.5 border border-neutral-700 bg-neutral-800 text-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                        class="w-full pl-10 pr-3 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
                         placeholder="Masukkan NIM Anda" required>
                 </div>
             </div>
-            <div>
-                <label class="block mb-2 font-medium text-neutral-400">Password</label>
+            <div id="password-container">
+                <label class="block mb-2 font-medium text-neutral-300">Password</label>
                 <div class="relative">
-                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                     <span class="absolute inset-y-0 left-0 flex items-center pl-3.5">
                         <i class="fa-solid fa-lock text-neutral-500"></i>
                     </span>
                     <input type="password" name="password"
-                        class="w-full pl-10 pr-3 py-2.5 border border-neutral-700 bg-neutral-800 text-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                        class="w-full pl-10 pr-10 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
                         placeholder="••••••••" required>
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 cursor-pointer">
+                        <i class="fa-solid fa-eye text-neutral-500 password-toggle-icon"></i>
+                    </span>
                 </div>
             </div>
-            <!-- Tombol Login dengan gradien dan efek modern -->
+            
             <button type="submit"
-                class="w-full bg-gradient-to-r from-red-600 to-red-800 text-white py-3 rounded-lg font-semibold shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all duration-300 hover:scale-105">
+                class="w-full bg-gradient-to-r from-red-600 to-red-800 text-white py-3 mt-4 rounded-lg font-semibold hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all duration-300">
                 Login
             </button>
         </form>
         
         <div class="text-center mt-6">
             <p class="text-sm text-neutral-400">Belum punya akun? 
-                <a href="register.html" class="font-semibold text-red-500 hover:text-red-400 transition-colors">
+                <a href="register.html" class="font-medium text-red-500 hover:underline">
                     Daftar di sini
                 </a>
             </p>
@@ -87,6 +86,12 @@
 
     <script src="js/auth.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/password-toggle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setupPasswordToggle('password-container');
+        });
+    </script>
 </body>
 
 </html>

@@ -13,7 +13,6 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Latar belakang hitam pekat dengan pola titik halus untuk kesan premium */
         body {
             background-color: #000000;
             background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
@@ -24,7 +23,6 @@
             animation: fadeIn 0.5s ease-in-out forwards;
         }
         
-        /* Memastikan ikon kalender pada input tanggal terlihat di tema gelap */
         .date-input-dark-icon {
             color-scheme: dark;
         }
@@ -32,52 +30,68 @@
 </head>
 <body class="min-h-screen flex items-center justify-center py-8 p-4 font-sans">
     
-    <div class="register-card bg-neutral-950/50 backdrop-blur-lg rounded-2xl shadow-2xl shadow-red-900/10 max-w-md w-full p-8 border border-neutral-800">
+    <div class="register-card bg-neutral-950/50 backdrop-blur-lg rounded-2xl shadow-2xl shadow-red-900/10 max-w-2xl w-full p-8 border border-neutral-800">
         
         <div class="mb-8 text-center flex flex-col items-center gap-3">
             <i class="fa-solid fa-user-plus text-red-500 text-3xl"></i>
             <h1 class="font-bold text-3xl bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                 Buat Akun Baru
             </h1>
-            <p class="text-neutral-400 text-sm">Satu langkah lagi untuk bergabung.</p>
+            <p class="text-neutral-400 text-sm">Satu langkah lagi untuk bergabung dengan para inovator.</p>
         </div>
 
         <form id="registerForm" class="space-y-4">
-            <div>
-                <label class="block mb-2 font-medium text-neutral-300">Nama Lengkap</label>
-                <input type="text" name="name" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Nama Lengkap" required>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2 font-medium text-neutral-300">Nama Lengkap</label>
+                    <input type="text" name="name" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Nama Lengkap Anda" required>
+                </div>
+                <div>
+                    <label class="block mb-2 font-medium text-neutral-300">NIM</label>
+                    <input type="text" name="nim" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Nomor Induk Mahasiswa" required>
+                </div>
             </div>
-            <div>
-                <label class="block mb-2 font-medium text-neutral-300">NPM</label>
-                <input type="text" name="nim" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Nomor Pokok Mahasiswa" required>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2 font-medium text-neutral-300">Tempat Lahir</label>
+                    <input type="text" name="birth_place" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Contoh: Jakarta" required>
+                </div>
+                <div>
+                    <label class="block mb-2 font-medium text-neutral-300">Tanggal Lahir</label>
+                    <input type="date" name="birth_date" class="date-input-dark-icon w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" required>
+                </div>
             </div>
-            <div>
-                <label class="block mb-2 font-medium text-neutral-300">Tempat Lahir</label>
-                <input type="text" name="birth_place" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Contoh: Jakarta" required>
-            </div>
-            <div>
-                <label class="block mb-2 font-medium text-neutral-300">Tanggal Lahir</label>
-                <input type="date" name="birth_date" class="date-input-dark-icon w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" required>
-            </div>
-            <div>
-                <label class="block mb-2 font-medium text-neutral-300">Nomor Telepon</label>
-                <input type="tel" name="phone_number" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Contoh: 0812123456789" required>
-            </div>
-            <div>
+             <div>
                 <label class="block mb-2 font-medium text-neutral-300">Email</label>
                 <input type="email" name="email" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="email@example.com" required>
             </div>
             <div>
-                <label class="block mb-2 font-medium text-neutral-300">Password</label>
-                <input type="password" id="password" name="password" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="••••••••" required>
+                <label class="block mb-2 font-medium text-neutral-300">Nomor Telepon</label>
+                <input type="tel" name="phone_number" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="Contoh: 081234567890" required>
             </div>
-            <div>
-                <label class="block mb-2 font-medium text-neutral-300">Konfirmasi Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full px-4 py-2.5 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="••••••••" required>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="password-field">
+                    <label class="block mb-2 font-medium text-neutral-300">Password</label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" class="w-full px-4 py-2.5 pr-10 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="••••••••" required>
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 cursor-pointer">
+                            <i class="fa-solid fa-eye text-neutral-500 password-toggle-icon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div id="confirm-password-field">
+                    <label class="block mb-2 font-medium text-neutral-300">Konfirmasi Password</label>
+                     <div class="relative">
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="w-full px-4 py-2.5 pr-10 border border-neutral-700 bg-neutral-900 text-neutral-200 rounded-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all" placeholder="••••••••" required>
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 cursor-pointer">
+                            <i class="fa-solid fa-eye text-neutral-500 password-toggle-icon"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
             
             <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-800 text-white py-3 mt-4 rounded-lg font-semibold hover:scale-105 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all duration-300">
-                Daftar
+                Daftar Akun
             </button>
         </form>
 
@@ -91,5 +105,12 @@
     
     <script src="js/auth.js"></script>
     <script src="js/register.js"></script>
+    <script src="js/password-toggle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setupPasswordToggle('password-field');
+            setupPasswordToggle('confirm-password-field');
+        });
+    </script>
 </body>
 </html>
